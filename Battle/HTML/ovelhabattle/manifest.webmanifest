@@ -1,0 +1,20 @@
+{
+  "name": "Ovelha Battle: Missão 2",
+  "short_name": "Ovelha Battle",
+  "description": "Desbrave a Distopia das Cavernas.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "landscape",
+  "background_color": "#0b0915",
+  "theme_color": "#141126",
+  "icons": [
+    {
+      "src": "assets/sprites/bytela.png",
+      "sizes": "1024x1024",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
+

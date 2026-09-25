@@ -1,0 +1,34 @@
+OVELHA BATTLE — MESMA VERSÃO PUBLICADA, PRONTA PARA CLOUDFLARE
+
+1. Extraia este ZIP no computador.
+2. No GitHub do projeto-vi, envie o CONTEÚDO extraído para a RAIZ do repositório.
+   wrangler.jsonc e .assetsignore ficam ao lado da pasta HTML.
+   Confirme o envio do .assetsignore, inclusive o ponto inicial.
+   Não envie o ZIP como arquivo do site.
+3. O jogo fica em HTML/ovelhabattle. Substitua os arquivos antigos do jogo.
+   Preserve os outros projetos que já estão no repositório.
+4. No Cloudflare Workers conectado ao repositório, use:
+   Nome do Worker: projeto-vi
+   Diretório raiz: raiz do repositório (não HTML nem ovelhabattle)
+   Comando de build: deixe vazio
+   Comando de deploy: npx wrangler deploy
+5. Depois de publicar, abra seu domínio seguido de /HTML/ovelhabattle/
+   Exemplo: https://SEU-DOMINIO/HTML/ovelhabattle/
+
+O pacote não usa dist, npm install nem etapa de compilação.
+A configuração publica os projetos da raiz e ignora a pasta interna .git,
+que causou o erro de tamanho no seu log.
+Não foi incluído um index.html na raiz para não substituir o seu portal.
+
+EDITAR DEPOIS
+Abra EDITOR-LOCAL/editor.html no navegador. Os dados já estão embutidos.
+Baixe o JSON e substitua HTML/ovelhabattle/data/game.json.
+Imagens novas devem ficar nos caminhos preenchidos no painel.
+O editor é excluído da publicação pelo .assetsignore.
+
+VERIFICAÇÃO
+Os arquivos do jogo são idênticos à versão publicada nesta conversa.
+Foram conferidos caminhos locais, módulos, tamanho dos arquivos e integridade do ZIP.
+O deploy na sua conta Cloudflare não foi executado por este pacote.
+Outros arquivos já existentes no seu repositório também devem respeitar os limites
+por arquivo do Cloudflare. Permissões e configurações da conta continuam necessárias.

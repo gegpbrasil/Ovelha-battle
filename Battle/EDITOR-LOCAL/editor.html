@@ -1,0 +1,1330 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>Ovelha Battle — Editor simples</title>
+<style>
+:root{--bg:#f4f5f1;--paper:#fff;--ink:#202d27;--muted:#626e66;--line:#dce2d9;--green:#226b47;--soft:#e8f2e8;--danger:#ab3245;--radius:16px;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--ink);background:var(--bg);font-size:16px;color-scheme:light}
+*{box-sizing:border-box}body{margin:0;min-width:320px}button,input,select,textarea{font:inherit}button{cursor:pointer;touch-action:manipulation;color:inherit}button:disabled{opacity:.48;cursor:not-allowed}button,input,select,textarea{border-radius:10px}button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible{outline:3px solid #667ccc;outline-offset:3px}button{border:1px solid var(--line);background:white;min-height:44px;padding:10px 16px;font-weight:650}button:hover:not(:disabled){border-color:#9bad9e;background:#f0f4ee}.primary{background:var(--green);border-color:var(--green);color:white}.primary:hover:not(:disabled){background:#185639;color:white}.quiet{border-color:transparent;background:transparent}.danger{color:var(--danger)}[hidden]{display:none!important}h1,h2,h3,p{margin-top:0}h1{font-size:clamp(1.8rem,4vw,2.6rem);letter-spacing:-.05em;line-height:1.1;margin-bottom:12px}h2{font-size:1.4rem;letter-spacing:-.03em}p{line-height:1.6;color:var(--muted)}small{color:var(--muted);line-height:1.5}.topbar{background:white;border-bottom:1px solid var(--line);padding:16px max(20px,calc((100vw - 1120px)/2));display:flex;align-items:center;justify-content:space-between;gap:20px}.brand{display:flex;gap:12px;align-items:center;white-space:nowrap}.mark{display:grid;place-items:center;width:42px;height:42px;background:#2b3930;color:#f1e4b2;border-radius:13px;font-weight:800;font-size:.95rem}.brand strong{display:block;font-size:.95rem}.brand small{font-size:.75rem}.toolbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.toolbar button{font-size:.875rem}.wrap{max-width:1160px;padding:36px 20px 70px;margin:auto}.intro{display:flex;justify-content:space-between;align-items:center;gap:24px;margin-bottom:26px}.intro p{margin:0;max-width:530px;font-size:.95rem}.steps{display:flex;gap:12px;font-size:.8rem;align-items:center;color:var(--muted);white-space:nowrap}.steps b{display:inline-grid;place-items:center;background:#e0e9de;color:var(--green);width:23px;height:23px;border-radius:50%;margin-right:5px}.tabbar{display:flex;gap:8px;overflow-x:auto;padding:4px 0 18px;scrollbar-width:thin}.tab{white-space:nowrap;border:0;background:transparent;color:var(--muted);font-size:.9rem}.tab[aria-pressed=true]{background:var(--ink);color:white}.tab small{color:inherit;opacity:.7;margin-left:6px}.section-head{display:flex;justify-content:space-between;align-items:center;gap:16px;margin:14px 0 22px}.section-head h2{margin:0 0 5px}.search{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.search input{max-width:190px;min-height:44px;padding:10px 13px;border:1px solid var(--line);background:white}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(235px,1fr));gap:14px}.card{border:1px solid var(--line);border-radius:var(--radius);background:var(--paper);overflow:hidden;min-width:0}.card-open{display:flex;align-items:center;gap:16px;text-align:left;width:100%;border:0;padding:20px;background:transparent;min-height:118px;border-radius:0}.card-open:hover:not(:disabled){background:#f9fbf7}.thumb{width:64px;height:72px;border-radius:10px;flex:0 0 auto;position:relative;overflow:hidden;background:#eeedf6;display:grid;place-items:center;color:#544175;font-size:1.3rem;font-weight:750}.thumb img{position:absolute;width:100%;height:100%;object-fit:cover;inset:0}.card-copy{min-width:0;display:grid;gap:6px}.card-copy strong{font-size:1rem;overflow-wrap:anywhere}.card-copy small{font-weight:450;font-size:.8rem}.order{display:flex;border-top:1px solid var(--line);padding:4px 10px;align-items:center;gap:8px;font-size:.8rem}.order span{margin-right:auto;color:var(--muted)}.order button{min-width:44px;padding:5px 10px}.empty{padding:32px;border:1px dashed #becabf;border-radius:var(--radius);text-align:center;grid-column:1/-1}.empty p{margin:0}.notice{margin:0 0 20px;border:1px solid #b8d0ba;background:#eaf4e8;border-radius:12px;padding:16px;font-size:.9rem;line-height:1.5;overflow-wrap:anywhere}.notice.error{border-color:#dfb0b7;background:#fff0f1;color:#8e2839}.notice ul{margin:8px 0;padding-left:20px}.help{margin-top:32px;border-top:1px solid var(--line);padding-top:20px;color:var(--muted);font-size:.85rem}.help summary{cursor:pointer;color:var(--ink);padding:12px 0;font-weight:600}.help p{max-width:740px;margin:8px 0}.help code{color:var(--ink);background:#e8ece4;padding:2px 5px;border-radius:4px}dialog{width:min(700px,calc(100% - 24px));max-height:calc(100dvh - 24px);margin:auto;padding:0;background:var(--paper);border:1px solid var(--line);border-radius:20px;color:var(--ink);box-shadow:0 25px 90px #1b302a33;overflow:auto}dialog::backdrop{background:#192a2659;backdrop-filter:blur(3px)}.form-head{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:22px 26px;border-bottom:1px solid var(--line);position:sticky;top:0;background:#fffffff5;z-index:2}.form-head h2{margin:4px 0 0}.form-body{padding:24px 26px}.field{display:grid;gap:7px;min-width:0;margin-bottom:19px}.field>span{font-size:.875rem;font-weight:650}.field small{font-size:.78rem;font-weight:400}.field input:not([type=checkbox]),.field select,.field textarea{width:100%;max-width:100%;min-height:46px;padding:11px 12px;border:1px solid #cdd7ce;background:#fbfcf9;color:var(--ink)}.field textarea{resize:vertical;min-height:105px;line-height:1.5}.row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 18px}.row.three{grid-template-columns:repeat(3,minmax(0,1fr))}.check{display:flex;align-items:center;gap:10px;margin:10px 0 20px;font-size:.875rem;line-height:1.45;cursor:pointer}.check input{width:19px;height:19px;accent-color:var(--green);flex-shrink:0}.fold{border-top:1px solid var(--line);margin-top:4px}.fold>summary{cursor:pointer;padding:18px 2px;font-size:.9rem;font-weight:650;list-style-position:inside}.fold-body{padding:2px 0 6px}.fold[open]>summary{color:var(--green)}.checks{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0 0 22px}.checks .check{margin:0;border:1px solid var(--line);border-radius:10px;padding:10px;background:#fbfcf9;font-weight:450}.hint{font-size:.82rem;line-height:1.6;color:var(--muted);margin:0 0 18px}.form-footer{position:sticky;bottom:0;display:flex;justify-content:space-between;gap:10px;padding:16px 26px;border-top:1px solid var(--line);background:#fffffff5;z-index:2}.form-footer>div{display:flex;gap:8px}.preview-box{display:flex;gap:14px;margin-bottom:22px;padding:14px;background:#f2f4ee;border-radius:12px;align-items:center;font-size:.8rem;color:var(--muted)}.preview-box .thumb{width:58px;height:58px}.mini-list{display:grid;gap:10px;margin:5px 0 20px}.mini-list button{display:flex;justify-content:space-between;align-items:center;text-align:left}.settings{max-width:780px}.settings>.fold{background:white;border:1px solid var(--line);border-radius:14px;padding:0 20px;margin-bottom:12px}.settings>.fold .fold-body{padding-bottom:18px}.saved-note{font-size:.8rem;color:var(--green)}
+@media(max-width:760px){.topbar{flex-wrap:wrap;padding:16px 20px}.toolbar{width:100%}.toolbar .primary{margin-left:auto}.wrap{padding-top:28px}.intro{display:block}.steps{margin-top:20px;font-size:.75rem}.section-head{align-items:flex-start;flex-wrap:wrap}.search{width:100%}.search input{flex:1;max-width:none;min-width:100px}.search .primary{margin-left:auto}.grid{grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}.card-open{min-height:100px}.form-head{padding:18px}.form-body{padding:20px}.form-footer{padding:14px}.form-footer button{font-size:.875rem}.row.three{gap:10px}.row.three .field>span{font-size:.8rem}}
+@media(max-width:410px){.steps{gap:8px}.steps b{width:20px;height:20px}.row{grid-template-columns:1fr}.row.three{grid-template-columns:repeat(3,minmax(0,1fr))}.checks{grid-template-columns:1fr}.toolbar button{padding:10px 12px}.form-footer{flex-wrap:wrap}.form-footer>div{margin-left:auto}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<header class="topbar"><div class="brand"><span class="mark">OB</span><div><strong>Ovelha Battle</strong><small>Editor simples · versão 3</small></div></div><div class="toolbar"><button id="importButton">Abrir outro JSON</button><button id="exportButton" class="primary">Baixar atualização ↓</button></div></header>
+<main class="wrap">
+<section class="intro"><div><h1>Seu próximo update.</h1><p>Escolha o que quer mudar. Os dados do jogo já estão aqui.</p></div><div class="steps"><span><b>1</b> Escolha</span><span><b>2</b> Edite a ficha</span><span><b>3</b> Baixe</span></div></section>
+<div id="notice" class="notice" role="status" hidden></div>
+<nav class="tabbar" id="tabs" aria-label="Tipo de conteúdo"></nav>
+<section aria-labelledby="listTitle"><header class="section-head"><div><h2 id="listTitle">Personagens</h2><small id="listHint"></small></div><div class="search" id="searchTools"><input id="searchInput" type="search" aria-label="Buscar pelo nome" placeholder="Buscar pelo nome"><button class="primary" id="addButton">+ Novo personagem</button></div></header><div id="contentList" class="grid"></div></section>
+<details class="help"><summary>Como colocar a atualização no jogo?</summary><p>1. Toque em <strong>Baixar atualização</strong>. O painel confere os dados e baixa <code>game.json</code>.</p><p>2. Substitua <code>data/game.json</code> no projeto. Se usou imagens novas, coloque os PNGs nos caminhos informados na ficha.</p><p>3. Envie os arquivos alterados ao seu GitHub, como você já faz. Abra o jogo novamente para carregar a atualização.</p><p>Para continuar editando depois, use <strong>Abrir outro JSON</strong> e escolha o arquivo que baixou. Em Mais ajustes você também pode baixar uma cópia deste painel com seus dados dentro.</p><p>As imagens são opcionais. Sem elas, o jogo usa um desenho simples. O painel funciona sozinho e não precisa de instalação. Não feche a aba antes de baixar suas alterações.</p></details>
+</main>
+<dialog id="editDialog" aria-labelledby="editTitle"><form id="editForm"><header class="form-head"><div><small id="editKicker">EDITAR PERSONAGEM</small><h2 id="editTitle">Ficha</h2></div><button type="button" class="quiet" id="closeEditor" aria-label="Fechar ficha">✕</button></header><div class="form-body"><div id="formErrors" class="notice error" role="alert" hidden></div><div id="formFields"></div></div><footer class="form-footer"><button type="button" class="quiet danger" id="removeButton">Excluir</button><div><button type="button" id="cancelEditor">Cancelar</button><button class="primary" type="submit">Salvar ficha</button></div></footer></form></dialog>
+<input type="file" accept=".json,application/json" id="importInput" hidden>
+<script type="application/json" id="default-game">{
+  "meta": {
+    "title": "Ovelha Battle",
+    "subtitle": "Missão 2",
+    "chapter": "Distopia das Cavernas",
+    "version": "0.4.0",
+    "monthlyMessage": "Novas fases da história chegam todo mês.",
+    "saveVersion": 2
+  },
+  "rarities": {
+    "criador": {
+      "label": "Criador",
+      "color": "#ffd166",
+      "description": "Gabriel, Ivy, Drop e Chan. Criadores dobram as regras da realidade."
+    },
+    "secreto": {
+      "label": "Secreto",
+      "color": "#ff4fd8",
+      "description": "Seres estranhos, anomalias e existências que deveriam estar escondidas."
+    },
+    "lenda": {
+      "label": "Lenda",
+      "color": "#9b7bff",
+      "description": "Guardiões, entidades e seres míticos."
+    },
+    "cidadao": {
+      "label": "Cidadão",
+      "color": "#42d7ff",
+      "description": "Combatentes fortes e versáteis da zona intermediária."
+    },
+    "cabo": {
+      "label": "Cabo",
+      "color": "#78e38b",
+      "description": "Subordinados treinados, especialistas e patrulheiros."
+    },
+    "morador": {
+      "label": "Morador",
+      "color": "#b8c0d9",
+      "description": "A raridade mais comum, barata e direta."
+    }
+  },
+  "economy": {
+    "currencies": {
+      "licano": {
+        "label": "Licanô",
+        "icon": "◈",
+        "description": "Moeda conquistada vencendo batalhas."
+      },
+      "upgradePoints": {
+        "label": "Pontos de upgrade",
+        "icon": "⬡",
+        "description": "Usados para aumentar o nível dos personagens."
+      }
+    },
+    "startingBalance": {
+      "licano": 320,
+      "upgradePoints": 180
+    },
+    "upgrade": {
+      "baseCost": 70,
+      "costGrowth": 45,
+      "maxLevel": 10,
+      "hpPerLevel": 0.09,
+      "damagePerLevel": 0.075
+    },
+    "summon": {
+      "title": "Conjuração do Gabriel",
+      "description": "Pague um preço fixo em Licanô. O próximo personagem sempre aparece antes da compra.",
+      "price": 250,
+      "currency": "licano",
+      "previewNext": true,
+      "queue": [
+        "dona_ovelha",
+        "ivy",
+        "drop",
+        "chan",
+        "mascarado",
+        "gabriel_ai"
+      ]
+    }
+  },
+  "characters": [
+    {
+      "id": "gabriel",
+      "name": "Gabriel",
+      "rarity": "criador",
+      "role": "Controle",
+      "description": "O Criador atravessa eras e abre fendas de energia para reorganizar o campo.",
+      "unlockedAtStart": true,
+      "portrait": "assets/portraits/gabriel.png",
+      "battleFrames": [
+        "assets/sprites/characters/gabriel-walk-1.png",
+        "assets/sprites/characters/gabriel-walk-2.png"
+      ],
+      "token": {
+        "color": "#f7a52f",
+        "accent": "#8d4cff",
+        "initial": "G"
+      },
+      "stats": {
+        "hp": 3900,
+        "damage": 520,
+        "speed": 205,
+        "range": 330,
+        "cooldown": 0.58
+      },
+      "storyGoal": "Fechar 3 fendas de criação durante a expedição.",
+      "skins": [
+        {
+          "id": "farao",
+          "name": "Gabriel Faraó",
+          "portrait": "assets/portraits/gabriel-farao.png",
+          "battleFrames": [
+            "assets/sprites/characters/gabriel-farao-walk-1.png",
+            "assets/sprites/characters/gabriel-farao-walk-2.png"
+          ],
+          "price": 210,
+          "description": "Uma versão dourada do Criador, encontrada fora de sua própria era."
+        }
+      ]
+    },
+    {
+      "id": "bytela",
+      "name": "Bytelã",
+      "rarity": "cidadao",
+      "role": "Suporte",
+      "description": "Comerciante-hacker que converte dados perdidos em escudos e ofertas suspeitosamente úteis.",
+      "unlockedAtStart": true,
+      "portrait": "assets/portraits/bytela.png",
+      "battleFrames": [
+        "assets/sprites/characters/bytela-walk-1.png",
+        "assets/sprites/characters/bytela-walk-2.png"
+      ],
+      "token": {
+        "color": "#f5ead6",
+        "accent": "#18d8ff",
+        "initial": "B"
+      },
+      "stats": {
+        "hp": 4300,
+        "damage": 420,
+        "speed": 190,
+        "dodge": 0.07,
+        "cooldown": 0.52,
+        "projectileSpeed": 610
+      },
+      "storyGoal": "Recuperar 8 fragmentos de dados da antiga loja.",
+      "skins": [
+        {
+          "id": "super_hacker",
+          "name": "Bytelã Super-Hacker",
+          "portrait": "assets/portraits/bytela-super-hacker.png",
+          "battleFrames": [
+            "assets/sprites/characters/bytela-super-hacker-walk-1.png",
+            "assets/sprites/characters/bytela-super-hacker-walk-2.png"
+          ],
+          "price": 190,
+          "description": "Teclados duplos, visor e uma quantidade irresponsável de neon."
+        }
+      ]
+    },
+    {
+      "id": "ivy",
+      "name": "Ivy",
+      "rarity": "criador",
+      "role": "Precisão",
+      "description": "Criadora de vínculos vivos que marca inimigos e recupera rotas esquecidas.",
+      "unlockedAtStart": false,
+      "portrait": "assets/portraits/ivy.png",
+      "battleFrames": [
+        "assets/sprites/characters/ivy-walk-1.png",
+        "assets/sprites/characters/ivy-walk-2.png"
+      ],
+      "token": {
+        "color": "#e83e55",
+        "accent": "#ff9c73",
+        "initial": "I"
+      },
+      "stats": {
+        "hp": 3400,
+        "damage": 610,
+        "speed": 210,
+        "dodge": 0.08,
+        "range": 390,
+        "cooldown": 0.72,
+        "projectileSpeed": 720
+      },
+      "storyGoal": "Reativar 4 raízes de energia da caverna."
+    },
+    {
+      "id": "drop",
+      "name": "Drop",
+      "rarity": "criador",
+      "role": "Velocidade",
+      "description": "Usa ecos líquidos para deslizar por caminhos onde o mapa já desistiu.",
+      "unlockedAtStart": false,
+      "portrait": "assets/portraits/drop.png",
+      "battleFrames": [
+        "assets/sprites/characters/drop-walk-1.png",
+        "assets/sprites/characters/drop-walk-2.png"
+      ],
+      "token": {
+        "color": "#ffbf38",
+        "accent": "#ff712f",
+        "initial": "D"
+      },
+      "stats": {
+        "hp": 3250,
+        "damage": 460,
+        "speed": 242,
+        "dodge": 0.14,
+        "range": 290,
+        "cooldown": 0.45,
+        "projectileSpeed": 690
+      },
+      "storyGoal": "Coletar 6 ecos líquidos sem ser atingido três vezes seguidas."
+    },
+    {
+      "id": "chan",
+      "name": "Chan",
+      "rarity": "criador",
+      "role": "Ofensivo",
+      "description": "Canaliza impulso criador em rajadas curtas e agressivas.",
+      "unlockedAtStart": false,
+      "portrait": "assets/portraits/chan.png",
+      "battleFrames": [
+        "assets/sprites/characters/chan-walk-1.png",
+        "assets/sprites/characters/chan-walk-2.png"
+      ],
+      "token": {
+        "color": "#1aa8ac",
+        "accent": "#62f4c9",
+        "initial": "C"
+      },
+      "stats": {
+        "hp": 4100,
+        "damage": 570,
+        "speed": 214,
+        "dodge": 0.06,
+        "range": 310,
+        "cooldown": 0.55,
+        "projectileSpeed": 670
+      },
+      "storyGoal": "Derrubar 12 patrulheiros do regime da caverna."
+    },
+    {
+      "id": "gabriel_ai",
+      "name": "Gabriel.AI",
+      "rarity": "secreto",
+      "role": "Anomalia",
+      "description": "Clone sintético que calcula padrões proibidos e altera pequenas regras da batalha.",
+      "unlockedAtStart": false,
+      "portrait": "assets/portraits/gabriel-ai.png",
+      "battleFrames": [
+        "assets/sprites/characters/gabriel-ai-walk-1.png",
+        "assets/sprites/characters/gabriel-ai-walk-2.png"
+      ],
+      "token": {
+        "color": "#161528",
+        "accent": "#d83cff",
+        "initial": "AI"
+      },
+      "stats": {
+        "hp": 4400,
+        "damage": 560,
+        "speed": 198,
+        "dodge": 0.11,
+        "range": 350,
+        "projectileSpeed": 730
+      },
+      "storyGoal": "Analisar os 5 terminais que o próprio laboratório tentou esconder.",
+      "skins": [
+        {
+          "id": "sabio",
+          "name": "Gabriel.AI Sábio",
+          "portrait": "assets/portraits/gabriel-ai-sabio.png",
+          "battleFrames": [
+            "assets/sprites/characters/gabriel-ai-sabio-walk-1.png",
+            "assets/sprites/characters/gabriel-ai-sabio-walk-2.png"
+          ],
+          "price": 230,
+          "description": "O laboratório ensinou demais ao clone. Péssima gestão de risco."
+        }
+      ]
+    },
+    {
+      "id": "dona_ovelha",
+      "name": "Dona Ovelha",
+      "rarity": "lenda",
+      "role": "Guardião",
+      "description": "Uma presença mítica capaz de proteger moradores e resistir aos corredores mais hostis.",
+      "unlockedAtStart": false,
+      "portrait": "assets/portraits/dona-ovelha.png",
+      "battleFrames": [
+        "assets/sprites/characters/dona-ovelha-walk-1.png",
+        "assets/sprites/characters/dona-ovelha-walk-2.png"
+      ],
+      "token": {
+        "color": "#fff4d7",
+        "accent": "#e9b34d",
+        "initial": "DO"
+      },
+      "stats": {
+        "hp": 5600,
+        "damage": 390,
+        "speed": 172,
+        "dodge": 0.03,
+        "range": 270,
+        "cooldown": 0.5,
+        "projectileSpeed": 560
+      },
+      "storyGoal": "Escoltar 3 moradores perdidos até uma zona segura."
+    },
+    {
+      "id": "mascarado",
+      "name": "Mascarado",
+      "rarity": "cabo",
+      "role": "Emboscada",
+      "description": "Especialista em rotas escuras, ataques rápidos e alvos isolados.",
+      "unlockedAtStart": false,
+      "portrait": "assets/portraits/mascarado.png",
+      "battleFrames": [
+        "assets/sprites/characters/mascarado-walk-1.png",
+        "assets/sprites/characters/mascarado-walk-2.png"
+      ],
+      "token": {
+        "color": "#33263d",
+        "accent": "#ff793f",
+        "initial": "M"
+      },
+      "stats": {
+        "hp": 3600,
+        "damage": 640,
+        "speed": 226,
+        "dodge": 0.16,
+        "range": 250,
+        "cooldown": 0.68,
+        "projectileSpeed": 690
+      },
+      "storyGoal": "Eliminar 3 guardas de elite antes que reforços apareçam."
+    }
+  ],
+  "story": {
+    "intro": "O caminho para a Distopia foi reaberto. Oito personagens entram nas cavernas com missões diferentes, mas a mesma pergunta: quem está reescrevendo os corredores?",
+    "monthlyCycle": "Cada atualização mensal pode acrescentar novas fases ao array story.phases sem alterar o motor do jogo.",
+    "phases": [
+      {
+        "id": "fase_1",
+        "name": "Entrada Sem Retorno",
+        "subtitle": "A primeira rachadura",
+        "description": "Abra caminho entre os Rastejantes e descubra por que a entrada se fechou atrás do grupo.",
+        "objective": {
+          "type": "defeat",
+          "target": 12
+        },
+        "timeLimit": 75,
+        "spawnInterval": 1.35,
+        "reward": {
+          "licano": 80,
+          "upgradePoints": 40
+        },
+        "palette": {
+          "ground": "#17142b",
+          "path": "#29224c",
+          "crystal": "#7d5cff",
+          "mist": "#ea4ddb"
+        },
+        "enemies": [
+          {
+            "id": "rastejante",
+            "weight": 7
+          },
+          {
+            "id": "eco_lume",
+            "weight": 3
+          }
+        ]
+      },
+      {
+        "id": "fase_2",
+        "name": "Mercado Afundado",
+        "subtitle": "Arquivos da Bytelã",
+        "description": "Recolha fragmentos espalhados pelas ruínas enquanto patrulheiros convergem para o mercado.",
+        "objective": {
+          "type": "collect",
+          "target": 6
+        },
+        "timeLimit": 85,
+        "spawnInterval": 1.2,
+        "reward": {
+          "licano": 95,
+          "upgradePoints": 60,
+          "skin": {
+            "characterId": "bytela",
+            "skinId": "super_hacker"
+          }
+        },
+        "palette": {
+          "ground": "#10263a",
+          "path": "#19465d",
+          "crystal": "#11ddeb",
+          "mist": "#8a3ffc"
+        },
+        "enemies": [
+          {
+            "id": "rastejante",
+            "weight": 5
+          },
+          {
+            "id": "eco_lume",
+            "weight": 3
+          },
+          {
+            "id": "guarda_basalto",
+            "weight": 2
+          }
+        ]
+      },
+      {
+        "id": "fase_3",
+        "name": "Lago Repriton",
+        "subtitle": "Corra ou seja cercado",
+        "description": "O vapor do Repriton acelera tudo. Sobreviva até o caminho reaparecer.",
+        "objective": {
+          "type": "survive",
+          "target": 55
+        },
+        "timeLimit": 65,
+        "spawnInterval": 0.92,
+        "reward": {
+          "licano": 115,
+          "upgradePoints": 80
+        },
+        "palette": {
+          "ground": "#0f3038",
+          "path": "#145b63",
+          "crystal": "#5fffd0",
+          "mist": "#31cdbb"
+        },
+        "enemies": [
+          {
+            "id": "rastejante",
+            "weight": 3
+          },
+          {
+            "id": "eco_lume",
+            "weight": 2
+          },
+          {
+            "id": "vigia_repriton",
+            "weight": 5
+          }
+        ]
+      },
+      {
+        "id": "fase_4",
+        "name": "Mina Cavernizo",
+        "subtitle": "A força das versões proibidas",
+        "description": "Os experimentos Cavernizo transformaram guardas comuns em brutamontes de pedra viva.",
+        "objective": {
+          "type": "elite",
+          "target": 3
+        },
+        "timeLimit": 95,
+        "spawnInterval": 1.05,
+        "reward": {
+          "licano": 145,
+          "upgradePoints": 100,
+          "skin": {
+            "characterId": "gabriel",
+            "skinId": "farao"
+          }
+        },
+        "palette": {
+          "ground": "#2b1918",
+          "path": "#4b2b25",
+          "crystal": "#ff934d",
+          "mist": "#8c3cff"
+        },
+        "enemies": [
+          {
+            "id": "guarda_basalto",
+            "weight": 5
+          },
+          {
+            "id": "eco_lume",
+            "weight": 2
+          },
+          {
+            "id": "cavernizo",
+            "weight": 3
+          }
+        ]
+      },
+      {
+        "id": "fase_5",
+        "name": "Núcleo da Distopia",
+        "subtitle": "O corredor que pensa",
+        "description": "Alcance o centro e derrube o Regente de Basalto antes que a caverna feche a própria saída.",
+        "objective": {
+          "type": "boss",
+          "target": 1
+        },
+        "timeLimit": 120,
+        "spawnInterval": 1.1,
+        "bossSpawnAt": 10,
+        "reward": {
+          "licano": 220,
+          "upgradePoints": 160,
+          "skin": {
+            "characterId": "gabriel_ai",
+            "skinId": "sabio"
+          }
+        },
+        "palette": {
+          "ground": "#191023",
+          "path": "#351746",
+          "crystal": "#f14be9",
+          "mist": "#674bff"
+        },
+        "enemies": [
+          {
+            "id": "rastejante",
+            "weight": 2
+          },
+          {
+            "id": "vigia_repriton",
+            "weight": 3
+          },
+          {
+            "id": "guarda_basalto",
+            "weight": 3
+          },
+          {
+            "id": "eco_lume",
+            "weight": 2
+          }
+        ],
+        "bossId": "regente_basalto"
+      }
+    ]
+  },
+  "npcs": [
+    {
+      "id": "rastejante",
+      "name": "Rastejante",
+      "kind": "melee",
+      "sprite": "assets/sprites/enemies/rastejante.png",
+      "hp": 900,
+      "damage": 180,
+      "speed": 78
+    },
+    {
+      "id": "eco_lume",
+      "name": "Eco-Lume",
+      "kind": "ranged",
+      "sprite": "assets/sprites/enemies/eco-lume.png",
+      "color": "#56e5ff",
+      "accent": "#1489a5",
+      "hp": 700,
+      "damage": 140,
+      "speed": 58,
+      "radius": 17
+    },
+    {
+      "id": "guarda_basalto",
+      "name": "Guarda de Basalto",
+      "kind": "tank",
+      "sprite": "assets/sprites/enemies/guarda-basalto.png",
+      "color": "#a77968",
+      "accent": "#55312b",
+      "hp": 2100,
+      "damage": 260,
+      "speed": 46,
+      "radius": 27
+    },
+    {
+      "id": "vigia_repriton",
+      "name": "Vigia Repriton",
+      "kind": "dash",
+      "sprite": "assets/sprites/enemies/vigia-repriton.png",
+      "color": "#53ffc1",
+      "accent": "#158b69",
+      "hp": 1050,
+      "damage": 205,
+      "speed": 125,
+      "radius": 18
+    },
+    {
+      "id": "cavernizo",
+      "name": "Cavernizo",
+      "kind": "elite",
+      "sprite": "assets/sprites/enemies/cavernizo.png",
+      "color": "#ff9958",
+      "accent": "#8c3f2c",
+      "hp": 4600,
+      "damage": 350,
+      "speed": 54,
+      "radius": 34
+    },
+    {
+      "id": "regente_basalto",
+      "name": "Regente de Basalto",
+      "kind": "boss",
+      "sprite": "assets/sprites/enemies/regente-basalto.png",
+      "color": "#ff4fa9",
+      "accent": "#552363",
+      "hp": 13500,
+      "damage": 410,
+      "speed": 48,
+      "range": 300,
+      "cooldown": 1.25,
+      "projectileSpeed": 280
+    }
+  ],
+  "shop": {
+    "title": "Loja da Bytelã",
+    "subtitle": "Skins, cosméticos e inutilidades com surpreendente valor estratégico.",
+    "items": [
+      {
+        "id": "upgrade_100",
+        "type": "upgradePoints",
+        "name": "Pacote de upgrade",
+        "description": "+100 pontos de upgrade.",
+        "price": 90,
+        "amount": 100,
+        "icon": "⬡"
+      },
+      {
+        "id": "spray_caverna",
+        "type": "cosmetic",
+        "name": "Spray: Saída inexistente",
+        "description": "Um cosmético totalmente inútil. A Bytelã recomenda.",
+        "price": 35,
+        "icon": "↯"
+      },
+      {
+        "id": "rastro_pixel",
+        "type": "cosmetic",
+        "name": "Rastro de pixels",
+        "description": "Deixa partículas digitais durante o movimento.",
+        "price": 85,
+        "icon": "✦"
+      }
+    ]
+  },
+  "lab": {
+    "title": "Laboratório do Gabriel.AI",
+    "subtitle": "Modificadores e itens banidos. Só um modificador pode ser equipado por batalha.",
+    "items": [
+      {
+        "id": "cavernizo",
+        "name": "Cavernizo",
+        "description": "Aumenta o ataque em 35% e ativa a versão das cavernas do personagem.",
+        "price": 170,
+        "effects": {
+          "damageMultiplier": 1.35,
+          "speedMultiplier": 0.94,
+          "dodgeBonus": 0,
+          "caveVersion": true
+        },
+        "color": "#ff8b4d",
+        "icon": "⬢"
+      },
+      {
+        "id": "repriton",
+        "name": "Repriton",
+        "description": "Aumenta a velocidade em 22% e adiciona 15% de chance de desvio.",
+        "price": 150,
+        "effects": {
+          "damageMultiplier": 1,
+          "speedMultiplier": 1.22,
+          "dodgeBonus": 0.15,
+          "caveVersion": false
+        },
+        "color": "#4effbd",
+        "icon": "➤"
+      }
+    ]
+  },
+  "controls": {
+    "move": "W / A / S / D",
+    "attack": "Clique esquerdo ou ESPAÇO para mirar automaticamente",
+    "pause": "ESC",
+    "touch": "Direcional na tela + botão ATACAR"
+  }
+}</script>
+<script>
+// BEGIN SHARED CONTENT
+// Conteúdo padrão. Os campos do game.json substituem estes valores.
+// A lore pode ser editada aqui ou na ficha da fase no editor.html.
+const STORY_LORE = {
+  fase_1: { speaker: "gabriel", lines: [
+    "O caminho para a Distopia foi reaberto. Dentro das cavernas, os corredores parecem ter vida própria.",
+    "A entrada se fechou atrás da expedição. Entre as rachaduras, Rastejantes começam a se mover.",
+    "Antes de descobrir quem está reescrevendo estes caminhos, precisamos abrir passagem."
+  ] },
+  fase_2: { speaker: "bytela", lines: [
+    "O antigo mercado está afundado nas ruínas. Foi aqui que a Bytelã perdeu parte dos arquivos da sua loja.",
+    "Fragmentos de dados ainda brilham entre as pedras, mas as patrulhas também encontraram o lugar.",
+    "Recupere os fragmentos. Cada arquivo pode revelar um pedaço do caminho até o centro da caverna."
+  ] },
+  fase_3: { speaker: "drop", lines: [
+    "Mais adiante, o vapor do Repriton toma conta do lago. Tudo aqui parece se mover mais depressa.",
+    "O caminho desapareceu na névoa. Os Vigias se aproximam antes que a expedição consiga atravessar.",
+    "Continue em movimento e resista até a passagem reaparecer."
+  ] },
+  fase_4: { speaker: "gabriel_ai", lines: [
+    "A mina guarda os experimentos com Cavernizo. Seus efeitos transformaram guardas em criaturas de pedra viva.",
+    "A força dessas versões das cavernas já não cabe nos limites do laboratório.",
+    "Derrube os elites para seguir adiante. O núcleo da Distopia está próximo."
+  ] },
+  fase_5: { speaker: "gabriel", lines: [
+    "No centro da Distopia, até o corredor parece pensar. A expedição finalmente alcançou o núcleo.",
+    "O Regente de Basalto protege a passagem. A caverna começa a fechar a própria saída.",
+    "Enfrente o Regente antes que o tempo termine. Esta é a última passagem da missão."
+  ] }
+};
+
+const CONTENT_DEFAULTS = {
+  meta: { title: "Ovelha Battle", subtitle: "Missão 2", chapter: "Distopia das Cavernas", version: "0.4.0", monthlyMessage: "Novas fases da história chegam todo mês.", saveVersion: 2 },
+  rarities: {
+    criador: { label: "Criador", color: "#ffd166" }, secreto: { label: "Secreto", color: "#ff4fd8" },
+    lenda: { label: "Lenda", color: "#9b7bff" }, cidadao: { label: "Cidadão", color: "#42d7ff" },
+    cabo: { label: "Cabo", color: "#78e38b" }, morador: { label: "Morador", color: "#b8c0d9" }
+  },
+  stats: { hp: 3500, damage: 500, speed: 200, dodge: 0.05, range: 300, cooldown: 0.6, projectileSpeed: 650 },
+  npc: { kind: "melee", hp: 900, damage: 180, speed: 78, radius: 19, reward: 1, color: "#cf6cff", accent: "#7437b5", elite: false, boss: false, range: 245, cooldown: 1.65, projectileSpeed: 250 },
+  palette: { ground: "#17142b", path: "#29224c", crystal: "#7d5cff", mist: "#ea4ddb" },
+  economy: {
+    currencies: { licano: { label: "Licanô", icon: "◈" }, upgradePoints: { label: "Pontos de upgrade", icon: "⬡" } },
+    startingBalance: { licano: 320, upgradePoints: 180 },
+    upgrade: { baseCost: 70, costGrowth: 45, maxLevel: 10, hpPerLevel: 0.09, damagePerLevel: 0.075 },
+    summon: { title: "Conjuração do Gabriel", description: "Pague um preço fixo. O próximo personagem aparece antes da compra.", price: 250, currency: "licano", previewNext: true }
+  }
+};
+
+const copyContent = value => JSON.parse(JSON.stringify(value));
+const contentId = name => String(name || "novo").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "_").replace(/^_|_$/g, "") || "novo";
+function uniqueContentId(name, used) {
+  const base = contentId(name); let id = base, index = 2;
+  while (used.includes(id) || ["__proto__", "prototype", "constructor"].includes(id)) id = `${base}_${index++}`;
+  return id;
+}
+const framesFor = item => item.battleFrames?.length ? item.battleFrames : item.sprite ? [item.sprite] : [];
+const labelForObjective = (type, target) => ({ defeat: `Derrote ${target} inimigos`, collect: `Colete ${target} fragmentos`, survive: `Sobreviva por ${target} segundos`, elite: `Derrote ${target} elites`, boss: "Derrote o chefe" }[type] || "Complete a fase");
+
+function normalizeGameData(raw) {
+  const d = copyContent(raw), D = CONTENT_DEFAULTS;
+  d.meta = { ...D.meta, ...d.meta };
+  d.rarities = d.rarities ? { ...d.rarities } : copyContent(D.rarities);
+  d.characters = (d.characters || []).map((c, index) => {
+    c.id ||= contentId(c.name); c.name ||= c.id; c.rarity ||= "morador";
+    c.role ||= "Combatente"; c.description ||= ""; c.storyGoal ||= "Explorar as cavernas e concluir a expedição.";
+    c.unlockedAtStart ??= index === 0;
+    c.stats = { ...D.stats, ...c.stats };
+    c.token = { color: "#f5ead6", accent: d.rarities[c.rarity]?.color || "#8d5cff", initial: c.name.slice(0, 2).toUpperCase(), ...c.token };
+    c.battleFrames = framesFor(c); c.sprite ||= c.battleFrames[0] || ""; c.portrait ||= c.sprite;
+    const base = { id: "base", name: c.name, sprite: c.sprite, portrait: c.portrait, battleFrames: c.battleFrames, ownedAtStart: true, price: 0 };
+    const skins = c.skins || [];
+    c.skins = [{ ...base, ...skins.find(s => s.id === "base"), ownedAtStart: true }, ...skins.filter(s => s.id !== "base")].map(s => {
+      const frames = framesFor(s);
+      return { price: 0, ownedAtStart: false, ...s, id: s.id || contentId(s.name), name: s.name || c.name, battleFrames: frames.length ? frames : c.battleFrames, sprite: s.sprite || frames[0] || c.sprite, portrait: s.portrait || c.portrait };
+    });
+    return c;
+  });
+  if (d.characters.length && !d.characters.some(c => c.unlockedAtStart)) d.characters[0].unlockedAtStart = true;
+  const economy = d.economy || {};
+  d.economy = { ...D.economy, ...economy, currencies: { ...D.economy.currencies, ...economy.currencies }, startingBalance: { ...D.economy.startingBalance, ...economy.startingBalance }, upgrade: { ...D.economy.upgrade, ...economy.upgrade }, summon: { ...D.economy.summon, ...economy.summon } };
+  const locked = d.characters.filter(c => !c.unlockedAtStart).map(c => c.id);
+  d.economy.summon.queue = [...new Set([...(economy.summon?.queue || []).filter(id => locked.includes(id)), ...locked])];
+  d.npcs = (d.npcs || []).map(n => {
+    const kind = n.kind || (n.boss ? "boss" : n.elite ? "elite" : "melee");
+    const preset = kind === "boss" ? { hp: 13500, damage: 410, speed: 48, radius: 48, reward: 10 } : {};
+    return { ...D.npc, ...preset, ...n, id: n.id || contentId(n.name), kind, boss: kind === "boss" || n.boss === true, elite: ["boss", "elite"].includes(kind) || n.elite === true };
+  });
+  d.story = { intro: "A expedição atravessa as cavernas da Distopia.", ...d.story };
+  d.story.phases = (d.story.phases || []).map((p, i) => {
+    const type = p.objective?.type || "defeat", target = p.objective?.target ?? (type === "boss" ? 1 : type === "survive" ? 45 : 10);
+    const pool = p.enemies ?? p.npcPool ?? [];
+    const phase = { subtitle: "Distopia das Cavernas", description: "", timeLimit: 90, spawnInterval: 1.2, bossSpawnAt: 8, ...p, id: p.id || contentId(p.name), number: i + 1,
+      objective: { type, target, label: labelForObjective(type, target), ...p.objective },
+      npcPool: pool.map(n => typeof n === "string" ? { id: n, weight: 1 } : { weight: 1, ...n }),
+      reward: { licano: 80, upgradePoints: 40, ...p.reward }, palette: { ...D.palette, ...p.palette }
+    };
+    if (type === "boss") phase.bossId ||= d.npcs.find(n => n.boss)?.id || "";
+    phase.lore = p.lore === false ? { lines: [] } : p.lore || STORY_LORE[phase.id] || { speaker: d.characters[0]?.id, lines: [p.description || p.name] };
+    if (typeof phase.lore === "string") phase.lore = { lines: [phase.lore] };
+    return phase;
+  });
+  d.shop = { title: "Loja da Bytelã", subtitle: "Skins, cosméticos e upgrades para a expedição.", items: [], ...d.shop };
+  for (const c of d.characters) for (const s of c.skins) {
+    if (s.id === "base" || s.ownedAtStart || s.inShop === false || d.shop.items.some(item => item.type === "skin" && item.characterId === c.id && item.skinId === s.id)) continue;
+    d.shop.items.push({ id: `skin_${c.id}_${s.id}`, type: "skin", name: s.name, description: s.description || `Visual de ${c.name}.`, price: s.price, characterId: c.id, skinId: s.id, icon: "✦" });
+  }
+  d.lab = { title: "Laboratório do Gabriel.AI", subtitle: "Equipe um modificador por batalha.", items: [], ...d.lab };
+  d.lab.items = d.lab.items.map(item => ({ color: "#9b7bff", icon: "⬢", ...item, effects: { damageMultiplier: 1, speedMultiplier: 1, dodgeBonus: 0, caveVersion: false, ...item.effects } }));
+  d.controls ||= {};
+  return d;
+}
+
+// Converte o formato antigo em conteúdo curto, mantendo IDs e valores personalizados.
+function editableGameData(raw) {
+  const d = copyContent(raw);
+  delete d._editingGuide;
+  for (const c of d.characters || []) {
+    c.id ||= contentId(c.name);
+    const base = c.skins?.find(s => s.id === "base");
+    if (base) { c.portrait = base.portrait || c.portrait; c.battleFrames = framesFor(base).length ? framesFor(base) : framesFor(c); }
+    else if (c.sprite && !c.battleFrames?.length) c.battleFrames = [c.sprite];
+    delete c.sprite;
+    c.skins = (c.skins || []).filter(s => s.id !== "base");
+    for (const s of c.skins) {
+      s.id ||= contentId(s.name); if (s.sprite && !s.battleFrames?.length) s.battleFrames = [s.sprite]; delete s.sprite;
+      const item = d.shop?.items?.find(it => it.type === "skin" && it.characterId === c.id && it.skinId === s.id);
+      if (item) { s.price = item.price; s.description ||= item.description; }
+    }
+    if (!c.skins.length) delete c.skins;
+    // Vida, ataque e velocidade ficam visíveis; o restante só precisa existir se diferir do padrão.
+    for (const [key, value] of Object.entries(c.stats || {})) {
+      if (!["hp", "damage", "speed"].includes(key) && value === CONTENT_DEFAULTS.stats[key]) delete c.stats[key];
+    }
+    for (const skin of c.skins || []) {
+      if (skin.ownedAtStart === false) delete skin.ownedAtStart;
+      if (skin.inShop === true) delete skin.inShop;
+    }
+  }
+  if (d.shop?.items) d.shop.items = d.shop.items.filter(it => it.type !== "skin");
+  for (const n of d.npcs || []) {
+    n.id ||= contentId(n.name);
+    const kind = n.kind || (n.boss ? "boss" : n.elite ? "elite" : "melee");
+    n.kind = kind;
+    const defaults = { ...CONTENT_DEFAULTS.npc, boss: kind === "boss", elite: ["boss", "elite"].includes(kind), ...(kind === "boss" ? { radius: 48 } : {}) };
+    for (const [key, value] of Object.entries(n)) {
+      if (!["id", "name", "kind", "hp", "damage", "speed"].includes(key) && value === defaults[key]) delete n[key];
+    }
+    delete n.reward; // Licanô é concedido pela vitória, na recompensa da fase.
+  }
+  for (const p of d.story?.phases || []) {
+    p.id ||= contentId(p.name); delete p.number;
+    if (!p.enemies && p.npcPool) p.enemies = p.npcPool.map(n => n.weight === 1 ? n.id : n);
+    delete p.npcPool;
+    if (p.objective?.type === "boss") p.bossId ||= (d.npcs || []).find(n => n.boss || n.kind === "boss")?.id;
+  }
+  return d;
+}
+
+function validateGameData(raw) {
+  const errors = [];
+  const issue = message => errors.push(message);
+  if (!raw || typeof raw !== "object" || Array.isArray(raw)) return ["O arquivo não contém dados de jogo."];
+  for (const [label, list] of [["Personagens", raw.characters], ["Inimigos", raw.npcs], ["Fases", raw.story?.phases]]) {
+    if (!Array.isArray(list)) issue(`${label}: lista ausente ou inválida.`);
+    else if (list.some(item => !item || typeof item !== "object" || Array.isArray(item))) issue(`${label}: há uma ficha inválida.`);
+  }
+  if (errors.length) return errors;
+  let d; try { d = normalizeGameData(raw); } catch { return ["Há campos com formato inválido. Importe um game.json compatível."]; }
+  if (!d.characters.length) issue("Mantenha pelo menos um personagem.");
+  if (!d.story.phases.length) issue("Mantenha pelo menos uma fase.");
+  const checkIds = (items, label) => {
+    const ids = new Set(); for (const item of items) {
+      if (!/^[a-z0-9_-]+$/.test(item.id || "") || ["__proto__", "prototype", "constructor"].includes(item.id)) issue(`${label}: identificação inválida em ${item.name || "ficha sem nome"}.`);
+      if (ids.has(item.id)) issue(`${label}: identificação repetida (${item.id}).`); ids.add(item.id);
+      if (typeof item.name !== "string" || !item.name.trim()) issue(`${label}: preencha o nome.`);
+    }
+  };
+  const num = (v, min, max, label, integer = false) => {
+    if (typeof v !== "number" || !Number.isFinite(v) || v < min || v > max || (integer && !Number.isInteger(v))) issue(`${label}: use ${integer ? "um inteiro" : "um número"} entre ${min} e ${max}.`);
+  };
+  const art = (v, label) => { if (v && (typeof v !== "string" || /^(?:javascript|data|file):/i.test(v) || v.includes("\\") || /^[a-z]:/i.test(v))) issue(`${label}: use um caminho relativo do jogo ou endereço https.`); };
+  const colors = (values, label) => { for (const v of Object.values(values || {})) if (typeof v !== "string" || !/^#[a-f\d]{6}$/i.test(v)) issue(`${label}: use cores como #8d5cff.`); };
+  for (const [id, rarity] of Object.entries(d.rarities)) {
+    if (!/^[a-z0-9_-]+$/.test(id) || !rarity || typeof rarity.label !== "string" || !rarity.label.trim()) issue("Raridades: nome ou identificação inválida.");
+    colors({ color: rarity?.color }, "Raridades");
+  }
+  checkIds(d.characters, "Personagens"); checkIds(d.npcs, "Inimigos"); checkIds(d.story.phases, "Fases");
+  for (const c of d.characters) {
+    if (!Object.hasOwn(d.rarities, c.rarity)) issue(`${c.name}: raridade não encontrada.`);
+    for (const [k, v] of Object.entries(c.stats)) if (k in CONTENT_DEFAULTS.stats) num(v, k === "dodge" ? 0 : 0.01, k === "dodge" ? 0.75 : 1000000, `${c.name}: ${k}`);
+    checkIds(c.skins, `Skins de ${c.name}`);
+    for (const item of [c, ...c.skins]) { art(item.portrait, item.name); if (!Array.isArray(item.battleFrames)) issue(`${item.name}: os quadros de caminhada precisam ser uma lista.`); else for (const frame of item.battleFrames) art(frame, item.name); }
+    for (const s of c.skins) num(s.price, 0, 10000000, `${s.name}: preço`, true);
+    colors({ color: c.token.color, accent: c.token.accent }, c.name);
+  }
+  for (const n of d.npcs) {
+    if (!["melee", "ranged", "tank", "dash", "elite", "boss"].includes(n.kind)) issue(`${n.name}: comportamento desconhecido.`);
+    for (const k of ["hp", "damage", "speed", "radius", "cooldown", "projectileSpeed", "range"]) num(n[k], 0.01, 1000000, `${n.name}: ${k}`);
+    art(n.sprite, n.name); colors({ color: n.color, accent: n.accent }, n.name);
+  }
+  const skinExists = reward => d.characters.some(c => c.id === reward.characterId && c.skins.some(s => s.id === reward.skinId));
+  for (const p of d.story.phases) {
+    const type = p.objective.type;
+    if (!["defeat", "collect", "survive", "elite", "boss"].includes(type)) issue(`${p.name}: objetivo desconhecido.`);
+    num(p.objective.target, 1, type === "collect" ? 100 : 10000, `${p.name}: meta`, true);
+    num(p.timeLimit, 5, 3600, `${p.name}: duração`); num(p.spawnInterval, 0.2, 60, `${p.name}: intervalo`);
+    if (type === "survive" && p.objective.target > p.timeLimit) issue(`${p.name}: a meta excede o tempo da fase.`);
+    if (!p.npcPool.length && type !== "boss") issue(`${p.name}: escolha pelo menos um inimigo.`);
+    for (const n of p.npcPool) { if (!d.npcs.some(t => t.id === n.id)) issue(`${p.name}: inimigo não encontrado (${n.id}).`); num(n.weight, 0.01, 10000, `${p.name}: frequência`); }
+    if (type === "elite" && !p.npcPool.some(n => d.npcs.some(t => t.id === n.id && t.elite))) issue(`${p.name}: inclua um inimigo elite.`);
+    if (type === "boss") {
+      if (!d.npcs.some(n => n.id === p.bossId && n.boss)) issue(`${p.name}: escolha um chefe válido.`);
+      num(p.bossSpawnAt, 0, p.timeLimit - 1, `${p.name}: surgimento do chefe`);
+      if (p.objective.target !== 1) issue(`${p.name}: a meta de chefe deve ser 1.`);
+      if (p.npcPool.some(n => n.id === p.bossId)) issue(`${p.name}: remova o chefe da lista de reforços; ele surge separadamente.`);
+    }
+    for (const k of ["licano", "upgradePoints"]) num(p.reward[k], 0, 10000000, `${p.name}: recompensa`, true);
+    if (p.reward.skin && !skinExists(p.reward.skin)) issue(`${p.name}: a skin da recompensa não existe.`);
+    colors(p.palette, p.name); art(p.background, p.name);
+    if (!Array.isArray(p.lore.lines) || p.lore.lines.some(line => typeof line !== "string")) issue(`${p.name}: escreva a história como uma lista de falas.`);
+  }
+  checkIds(d.shop.items, "Loja"); checkIds(d.lab.items, "Laboratório");
+  for (const item of d.shop.items) { num(item.price, 0, 10000000, `${item.name}: preço`, true); if (item.type === "skin" && !skinExists(item)) issue(`${item.name}: skin não encontrada.`); if (!["skin", "cosmetic", "upgradePoints"].includes(item.type)) issue(`${item.name}: tipo inválido.`); if (item.type === "upgradePoints") num(item.amount, 1, 10000000, `${item.name}: pontos`, true); }
+  for (const item of d.lab.items) { num(item.price, 0, 10000000, `${item.name}: preço`, true); num(item.effects.damageMultiplier, 0.1, 10, `${item.name}: ataque`); num(item.effects.speedMultiplier, 0.1, 5, `${item.name}: velocidade`); num(item.effects.dodgeBonus, 0, 0.75, `${item.name}: desvio`); }
+  num(d.economy.summon.price, 0, 10000000, "Conjuração: preço", true);
+  for (const k of ["licano", "upgradePoints"]) num(d.economy.startingBalance[k], 0, 10000000, `Saldo: ${k}`, true);
+  num(d.economy.upgrade.maxLevel, 1, 100, "Upgrade: nível máximo", true);
+  for (const k of ["baseCost", "costGrowth", "hpPerLevel", "damagePerLevel"]) num(d.economy.upgrade[k], 0, 100000, `Upgrade: ${k}`);
+  return [...new Set(errors)];
+}
+
+// END SHARED CONTENT
+// Painel interno: tudo fica neste HTML. Nenhuma biblioteca ou servidor necessário.
+const byId = id => document.getElementById(id);
+const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+let data = editableGameData(JSON.parse(byId('default-game').textContent));
+let category = 'characters', editing = null, dirty = false, formDirty = false;
+const CATEGORIES = {
+  characters: ['Personagens', 'Novo personagem', 'Nome, atributos e aparência. A Conjuração é organizada automaticamente.'],
+  skins: ['Skins', 'Nova skin', 'Crie um visual e escolha a quem ele pertence. A loja usa o preço desta ficha.'],
+  npcs: ['Inimigos', 'Novo inimigo', 'NPCs, vilões e elites que aparecem durante as fases.'],
+  bosses: ['Chefes', 'Novo chefe', 'Cadastre o chefe aqui e depois escolha em qual fase ele aparece.'],
+  phases: ['Fases', 'Nova fase', 'Objetivo, inimigos, recompensas e história. A ordem abaixo é a ordem do jogo.'],
+  settings: ['Mais ajustes', '', 'Loja, laboratório e economia. Abra apenas o que precisar.']
+};
+const KINDS = { melee:'Corpo a corpo', ranged:'Atira de longe', tank:'Tanque', dash:'Veloz', elite:'Elite', boss:'Chefe' };
+const OBJECTIVES = { defeat:'Derrotar inimigos', collect:'Coletar fragmentos', survive:'Sobreviver', elite:'Derrotar elites', boss:'Vencer um chefe' };
+const LABELS = {character:'personagem',skin:'skin',npc:'inimigo',boss:'chefe',phase:'fase',item:'item da loja',modifier:'modificador',economy:'economia e textos',rarity:'raridade'};
+function showMessage(message, error=false, target='notice') {
+  const node=byId(target); node.hidden=false; node.classList.toggle('error',error);
+  node.innerHTML=Array.isArray(message)?'<strong>Confira antes de continuar:</strong><ul>'+message.map(t=>'<li>'+esc(t)+'</li>').join('')+'</ul>':esc(message);
+}
+function listEntries() {
+  const d=normalizeGameData(data);
+  if(category==='characters') return d.characters.map(c=>({id:c.id,type:'character',name:c.name,detail:d.rarities[c.rarity].label+' · '+c.stats.hp+' de vida',art:c.portrait}));
+  if(category==='skins') return d.characters.flatMap(c=>c.skins.filter(s=>s.id!=='base').map(s=>({id:s.id,type:'skin',parent:c.id,name:s.name,detail:c.name+' · '+s.price+' Licanô',art:s.portrait})));
+  if(category==='npcs'||category==='bosses') return d.npcs.filter(n=>category==='bosses'?n.boss:!n.boss).map(n=>({id:n.id,type:n.boss?'boss':'npc',name:n.name,detail:KINDS[n.kind]+' · '+n.hp+' de vida',art:n.sprite}));
+  if(category==='phases') return d.story.phases.map(p=>({id:p.id,type:'phase',name:p.name,detail:OBJECTIVES[p.objective.type]+' · '+p.timeLimit+' s',number:p.number}));
+  return [];
+}
+function thumb(name,path='',number='') {
+  return '<span class="thumb"><span>'+esc(number||name.slice(0,2).toUpperCase())+'</span>'+(path?'<img loading="lazy" src="'+esc(path)+'" alt="">':'')+'</span>';
+}
+function render() {
+  const count={characters:data.characters.length,skins:data.characters.reduce((n,c)=>n+(c.skins?.length||0),0),npcs:data.npcs.filter(n=>!n.boss&&n.kind!=='boss').length,bosses:data.npcs.filter(n=>n.boss||n.kind==='boss').length,phases:data.story.phases.length};
+  byId('tabs').innerHTML=Object.entries(CATEGORIES).map(([id,value])=>'<button class="tab" data-category="'+id+'" aria-pressed="'+(category===id)+'">'+value[0]+(count[id]!==undefined?'<small>'+count[id]+'</small>':'')+'</button>').join('');
+  byId('listTitle').textContent=CATEGORIES[category][0]; byId('listHint').textContent=CATEGORIES[category][2];
+  byId('addButton').textContent='+ '+CATEGORIES[category][1];
+  byId('searchTools').hidden=category==='settings';
+  byId('contentList').className=category==='settings'?'settings':'grid';
+  if(category==='settings'){renderSettings();return;}
+  const term=byId('searchInput').value.trim().toLocaleLowerCase('pt-BR');
+  const entries=listEntries().filter(e=>(e.name+' '+e.detail).toLocaleLowerCase('pt-BR').includes(term));
+  byId('contentList').innerHTML=entries.length?entries.map(e=>'<article class="card"><button class="card-open" data-edit="'+e.type+'" data-id="'+esc(e.id)+'" data-parent="'+esc(e.parent||'')+'" aria-label="Editar '+esc(e.name)+'">'+thumb(e.name,e.art,e.number)+'<span class="card-copy"><strong>'+esc(e.name)+'</strong><small>'+esc(e.detail)+'</small></span></button>'+(e.type==='phase'?'<div class="order"><span>Fase '+e.number+'</span><button data-move="-1" data-id="'+esc(e.id)+'" aria-label="Mover '+esc(e.name)+' para antes" '+(e.number===1?'disabled':'')+'>↑</button><button data-move="1" data-id="'+esc(e.id)+'" aria-label="Mover '+esc(e.name)+' para depois" '+(e.number===data.story.phases.length?'disabled':'')+'>↓</button></div>':'')+'</article>').join(''):'<div class="empty"><p>'+(term?'Nenhum nome encontrado.':'Ainda não há fichas aqui. Use o botão de adicionar acima.')+'</p></div>';
+}
+function renderSettings() {
+  const d=normalizeGameData(data);
+  const mini=(items,type)=>'<div class="mini-list">'+items.map(i=>'<button data-edit="'+type+'" data-id="'+esc(i.id)+'"><span>'+esc(i.name)+'</span><small>Editar →</small></button>').join('')+'</div>';
+  byId('contentList').innerHTML=
+    '<details class="fold"><summary>Loja da Bytelã</summary><div class="fold-body"><p class="hint">Os visuais são editados na aba Skins. Aqui ficam os pontos de upgrade e outros cosméticos.</p>'+mini(data.shop?.items||[],'item')+'<button data-new="item">+ Novo item</button></div></details>'+
+    '<details class="fold"><summary>Laboratório do Gabriel.AI</summary><div class="fold-body">'+mini(data.lab?.items||[],'modifier')+'<button data-new="modifier">+ Novo modificador</button></div></details>'+
+    '<details class="fold"><summary>Economia e textos do jogo</summary><div class="fold-body"><p class="hint">Preços, recompensas iniciais, níveis e apresentação da missão.</p><button data-edit="economy">Editar ajustes</button></div></details>'+
+    '<details class="fold"><summary>Raridades</summary><div class="fold-body">'+mini(Object.entries(d.rarities).map(([id,r])=>({id,name:r.label})),'rarity')+'<button data-new="rarity">+ Nova raridade</button></div></details>'+
+    '<details class="fold"><summary>Guardar o painel com meus dados</summary><div class="fold-body"><p class="hint">Baixe outro HTML igual a este, já com suas alterações por padrão. Use essa cópia no próximo update.</p><button id="snapshotButton">Baixar painel atualizado ↓</button></div></details>';
+}
+function field(name,label,value='',options={}) {
+  const attrs=' name="'+esc(name)+'" '+(options.required?'required ':'')+(options.min!==undefined?'min="'+options.min+'" ':'')+(options.max!==undefined?'max="'+options.max+'" ':'')+(options.step?'step="'+options.step+'" ':'')+(options.placeholder?'placeholder="'+esc(options.placeholder)+'" ':'');
+  let control;
+  if(options.choices) control='<select'+attrs+'>'+Object.entries(options.choices).map(([id,text])=>'<option value="'+esc(id)+'" '+(String(value)===id?'selected':'')+'>'+esc(text)+'</option>').join('')+'</select>';
+  else if(options.area) control='<textarea'+attrs+' rows="'+(options.rows||3)+'">'+esc(value)+'</textarea>';
+  else control='<input type="'+(options.type||'text')+'"'+attrs+'value="'+esc(value)+'">';
+  return '<label class="field"><span>'+esc(label)+'</span>'+control+(options.hint?'<small>'+esc(options.hint)+'</small>':'')+'</label>';
+}
+const numberField=(name,label,value,min=0,max=1000000,step='any')=>field(name,label,value,{type:'number',min,max,step,required:true});
+const row=(html,three=false)=>'<div class="row'+(three?' three':'')+'">'+html+'</div>';
+const fold=(title,html,open=false)=>'<details class="fold" '+(open?'open':'')+'><summary>'+esc(title)+'</summary><div class="fold-body">'+html+'</div></details>';
+const check=(name,label,value)=>'<label class="check"><input type="checkbox" name="'+esc(name)+'" '+(value?'checked':'')+'>'+esc(label)+'</label>';
+function imageFields(item,kind) {
+  let html='<p class="hint">Use caminhos como assets/sprites/meu-personagem.png. Coloque o PNG nessa pasta do jogo. Você pode deixar em branco por enquanto.</p>';
+  if(kind==='npc') return html+field('sprite','Sprite visto de cima',item.sprite||'',{placeholder:'assets/sprites/inimigo.png'});
+  html+=field('portrait','Retrato de frente (menu)',item.portrait||'',{placeholder:'assets/portraits/personagem.png'});
+  html+=field('frame1','Sprite visto de cima',item.battleFrames?.[0]||'',{placeholder:'assets/sprites/personagem-passo-1.png'});
+  html+=field('frame2','Segundo passo (opcional)',item.battleFrames?.[1]||'',{hint:'Sem o segundo PNG, o primeiro é usado durante a caminhada.'});
+  return html;
+}
+function findRaw(type,id,parent,source=data) {
+  if(type==='character') return source.characters.find(c=>c.id===id);
+  if(type==='skin') return source.characters.find(c=>c.id===parent)?.skins?.find(s=>s.id===id);
+  if(type==='npc'||type==='boss') return source.npcs.find(n=>n.id===id);
+  if(type==='phase') return source.story.phases.find(p=>p.id===id);
+  if(type==='item') return source.shop?.items?.find(i=>i.id===id);
+  if(type==='modifier') return source.lab?.items?.find(i=>i.id===id);
+  if(type==='rarity') {const r=normalizeGameData(source).rarities[id];return r?{id,name:r.label,color:r.color}:null;}
+  return source;
+}
+function newSeed(type) {
+  if(type==='character') return {name:'',rarity:'morador',unlockedAtStart:false,stats:{hp:3500,damage:500,speed:200}};
+  if(type==='skin') return {name:'',price:120,ownedAtStart:false};
+  if(type==='npc'||type==='boss') return {name:'',kind:type==='boss'?'boss':'melee',hp:type==='boss'?13500:900,damage:type==='boss'?410:180,speed:type==='boss'?48:78};
+  if(type==='phase') return {name:'',objective:{type:'defeat',target:10},enemies:data.npcs.filter(n=>!n.boss&&n.kind!=='boss').slice(0,1).map(n=>n.id),reward:{licano:80,upgradePoints:40},lore:{speaker:data.characters[0]?.id,lines:[]}};
+  if(type==='item') return {name:'',type:'upgradePoints',amount:100,price:70,icon:'⬡',description:''};
+  if(type==='modifier') return {name:'',price:200,icon:'⬢',color:'#9b7bff',effects:{damageMultiplier:1.2,speedMultiplier:1,dodgeBonus:0,caveVersion:false}};
+  if(type==='rarity') return {name:'',color:'#8d5cff'};
+  return data;
+}
+function openEditor(type,id=null,parent=null) {
+  const d=normalizeGameData(data);
+  const original=id?findRaw(type,id,parent):newSeed(type);
+  if(!original) {showMessage('Esta ficha não existe mais.',true);return;}
+  editing={type,id,parent:parent||data.characters[0]?.id,item:copyContent(original)};
+  formDirty=false;
+  let item=original;
+  if(id&&type!=='rarity'&&type!=='economy') item=findRaw(type,id,parent,d);
+  byId('editKicker').textContent=(id||type==='economy'?'EDITAR ':'ADICIONAR ')+LABELS[type].toUpperCase();
+  byId('editTitle').textContent=item.name||LABELS[type].charAt(0).toUpperCase()+LABELS[type].slice(1);
+  byId('removeButton').hidden=!id||type==='economy';
+  byId('formErrors').hidden=true;
+  let html='';
+  if(type!=='economy') html+=field('name','Nome',item.name,{required:true});
+  if(type==='character') {
+    const stats={...CONTENT_DEFAULTS.stats,...item.stats};
+    html+=field('rarity','Raridade',item.rarity,{choices:Object.fromEntries(Object.entries(d.rarities).map(([id,r])=>[id,r.label]))});
+    html+=row(numberField('hp','Vida',stats.hp,1)+numberField('damage','Ataque',stats.damage,1)+numberField('speed','Velocidade',stats.speed,1),true);
+    html+=check('unlockedAtStart','Disponível desde o início',item.unlockedAtStart);
+    html+='<p class="hint">Se ficar desmarcado, o personagem entra automaticamente na Conjuração.</p>';
+    html+=fold('Imagens (opcional)',imageFields(item,type));
+    html+=fold('Descrição e objetivo pessoal',field('role','Função',item.role||'Combatente')+field('description','Descrição',item.description||'',{area:true})+field('storyGoal','Objetivo na história',item.storyGoal||'',{area:true}));
+    html+=fold('Mais opções de combate',row(numberField('range','Alcance',stats.range,1)+numberField('cooldown','Segundos entre ataques',stats.cooldown,.01,60))+row(numberField('projectileSpeed','Velocidade do disparo',stats.projectileSpeed,1)+numberField('dodge','Chance de desvio (%)',Math.round(stats.dodge*10000)/100,0,75)));
+  }
+  if(type==='skin') {
+    const choices=Object.fromEntries(d.characters.map(c=>[c.id,c.name]));
+    html+=id?'<p class="hint">Personagem: <strong>'+esc(choices[editing.parent])+'</strong></p>':field('owner','Personagem',editing.parent,{choices});
+    html+=numberField('price','Preço na loja (Licanô)',item.price||0,0,10000000,'1');
+    html+=check('inShop','Aparece na loja',item.inShop!==false&&!item.ownedAtStart);
+    html+=fold('Imagens do visual',imageFields(item,type),true);
+    html+=fold('Mais opções',field('description','Descrição',item.description||'',{area:true})+check('ownedAtStart','Visual gratuito desde o início',item.ownedAtStart));
+  }
+  if(type==='npc'||type==='boss') {
+    const stats={...CONTENT_DEFAULTS.npc,...(type==='boss'?{radius:48}:{}),...item};
+    if(type==='npc') html+=field('kind','Como ele luta?',stats.kind,{choices:Object.fromEntries(Object.entries(KINDS).filter(([id])=>id!=='boss'))});
+    else html+='<p class="hint">Chefe com ataques à distância. Depois de salvar, selecione este chefe na ficha da fase.</p>';
+    html+=row(numberField('hp','Vida',stats.hp,1)+numberField('damage','Ataque',stats.damage,1)+numberField('speed','Velocidade',stats.speed,1),true);
+    html+=fold('Imagem (opcional)',imageFields(stats,'npc'));
+    html+=fold('Mais opções de combate',row(numberField('radius','Tamanho na arena',stats.radius,1,150)+numberField('range','Alcance do disparo',stats.range,1))+row(numberField('cooldown','Segundos entre disparos',stats.cooldown,.01,60)+numberField('projectileSpeed','Velocidade do disparo',stats.projectileSpeed,1))+(type==='npc'?check('elite','Conta como elite',stats.elite||stats.kind==='elite'):'')+row(field('color','Cor principal',stats.color,{type:'color'})+field('accent','Cor secundária',stats.accent,{type:'color'})));
+  }
+  if(type==='phase') {
+    const p=normalizeGameData({...data,story:{...data.story,phases:[item]}}).story.phases[0];
+    html+=field('objectiveType','O que o jogador precisa fazer?',p.objective.type,{choices:OBJECTIVES});
+    html+='<div id="goalFields">'+row(numberField('target',p.objective.type==='survive'?'Sobreviver por (segundos)':'Quantidade',p.objective.target,1,10000,'1')+numberField('timeLimit','Tempo da fase (segundos)',p.timeLimit,5,3600))+'</div>';
+    const bosses=d.npcs.filter(n=>n.boss);
+    html+='<div id="bossFields">'+field('bossId','Chefe desta fase',p.bossId||'',{choices:{'':'Escolha um chefe',...Object.fromEntries(bosses.map(n=>[n.id,n.name]))}})+(bosses.length?'':'<p class="hint">Cadastre um chefe na aba Chefes primeiro.</p>')+'</div>';
+    const pool=p.npcPool.map(n=>n.id);
+    html+=fold('Inimigos que aparecem', '<p class="hint">Marque os inimigos. Em fases de chefe, eles são os reforços.</p><div class="checks">'+d.npcs.filter(n=>!n.boss).map(n=>'<label class="check"><input type="checkbox" name="enemies" value="'+esc(n.id)+'" '+(pool.includes(n.id)?'checked':'')+'>'+esc(n.name)+(n.elite?' · elite':'')+'</label>').join('')+'</div>',!id);
+    const skinChoices={'':'Nenhuma skin',...Object.fromEntries(d.characters.flatMap(c=>c.skins.filter(s=>s.id!=='base').map(s=>[c.id+':'+s.id,s.name+' · '+c.name])))};
+    html+=fold('Recompensas',row(numberField('licano','Licanô',p.reward.licano,0,10000000,'1')+numberField('upgradePoints','Pontos de upgrade',p.reward.upgradePoints,0,10000000,'1'))+field('rewardSkin','Skin de prêmio',p.reward.skin?p.reward.skin.characterId+':'+p.reward.skin.skinId:'',{choices:skinChoices}));
+    html+=fold('História e narração',field('speaker','Quem conta?',p.lore.speaker||'',{choices:{'':'Narrador',...Object.fromEntries(d.characters.map(c=>[c.id,c.name]))}})+field('lore','Texto da cena',p.lore.lines.join('\n\n'),{area:true,rows:6,hint:'Separe os trechos com uma linha vazia. O jogo lê em português e oferece Pular. Deixe vazio para entrar direto na fase.'}));
+    html+=fold('Visual e descrição',field('subtitle','Subtítulo',p.subtitle)+field('description','Descrição no mapa de fases',p.description,{area:true})+field('background','Imagem de fundo da arena (opcional)',p.background||'',{hint:'Imagem 1280 × 720. Muda o visual; paredes desenhadas não bloqueiam o movimento.'})+row(field('ground','Cor do chão',p.palette.ground,{type:'color'})+field('path','Cor do caminho',p.palette.path,{type:'color'}))+row(field('crystal','Cor dos cristais',p.palette.crystal,{type:'color'})+field('mist','Cor da névoa',p.palette.mist,{type:'color'})));
+    html+=fold('Mais opções de dificuldade',numberField('spawnInterval','Segundos entre novos inimigos',p.spawnInterval,.2,60)+numberField('bossSpawnAt','Chefe aparece após (segundos)',p.bossSpawnAt,0,3599));
+  }
+  if(type==='item') {
+    html+=field('itemType','Tipo de item',item.type,{choices:{upgradePoints:'Pacote de pontos de upgrade',cosmetic:'Cosmético colecionável'}});
+    html+=numberField('price','Preço (Licanô)',item.price,0,10000000,'1');
+    html+='<div id="amountFields">'+numberField('amount','Quantidade de pontos',item.amount||100,1,10000000,'1')+'</div>';
+    html+=fold('Descrição e símbolo',field('description','Descrição',item.description||'',{area:true})+field('icon','Símbolo ou emoji',item.icon||'✦'));
+  }
+  if(type==='modifier') {
+    const effects={damageMultiplier:1,speedMultiplier:1,dodgeBonus:0,caveVersion:false,...item.effects};
+    html+=numberField('price','Preço (Licanô)',item.price,0,10000000,'1');
+    html+=row(numberField('damageMultiplier','Multiplicador de ataque',effects.damageMultiplier||1,.1,10)+numberField('speedMultiplier','Multiplicador de velocidade',effects.speedMultiplier||1,.1,5));
+    html+='<p class="hint">1 = sem mudança. 1,2 = aumento de 20%.</p>';
+    html+=numberField('dodgeBonus','Desvio extra (%)',Math.round((effects.dodgeBonus||0)*10000)/100,0,75);
+    html+=check('caveVersion','Ativa aparência das cavernas',effects.caveVersion);
+    html+=fold('Descrição e visual',field('description','Descrição',item.description||'',{area:true})+row(field('icon','Símbolo ou emoji',item.icon||'⬢')+field('color','Cor',item.color||'#9b7bff',{type:'color'})));
+  }
+  if(type==='rarity') html+=field('color','Cor da raridade',item.color,{type:'color'});
+  if(type==='economy') {
+    html+=row(field('title','Nome do jogo',d.meta.title,{required:true})+field('subtitle','Missão',d.meta.subtitle,{required:true}));
+    html+=field('chapter','Nome do capítulo',d.meta.chapter,{required:true})+field('version','Versão da atualização',d.meta.version,{required:true});
+    html+=fold('Textos da tela inicial',field('intro','Apresentação',d.story.intro,{area:true})+field('monthlyMessage','Mensagem das atualizações',d.meta.monthlyMessage,{area:true}));
+    html+=fold('Saldo inicial e Conjuração',row(numberField('startingLicano','Licanô inicial',d.economy.startingBalance.licano,0,10000000,'1')+numberField('startingUpgrade','Pontos iniciais',d.economy.startingBalance.upgradePoints,0,10000000,'1'))+numberField('summonPrice','Preço fixo da Conjuração',d.economy.summon.price,0,10000000,'1')+'<p class="hint">Saldos iniciais valem para novos saves. O progresso de quem já joga é mantido.</p>');
+    html+=fold('Evolução por nível',row(numberField('baseCost','Custo do primeiro upgrade',d.economy.upgrade.baseCost,0)+numberField('costGrowth','Aumento do custo por nível',d.economy.upgrade.costGrowth,0))+numberField('maxLevel','Nível máximo',d.economy.upgrade.maxLevel,1,100,'1')+row(numberField('hpPerLevel','Vida extra por nível (%)',d.economy.upgrade.hpPerLevel*100,0,1000)+numberField('damagePerLevel','Ataque extra por nível (%)',d.economy.upgrade.damagePerLevel*100,0,1000)));
+  }
+  if(id&&type!=='economy') html+=fold('Identificação automática','<p class="hint">Código: <strong>'+esc(id)+'</strong>. Ele é mantido quando você renomeia a ficha, para preservar os vínculos e o progresso.</p>');
+  byId('formFields').innerHTML=html;
+  updateConditionalFields();
+  byId('editDialog').showModal();
+  byId('editDialog').scrollTop=0;
+  byId('editForm').elements.namedItem(type==='economy'?'title':'name')?.focus({preventScroll:true});
+}
+function updateConditionalFields() {
+  const form=byId('editForm');
+  if(editing?.type==='phase') {
+    const type=form.elements.namedItem('objectiveType').value;
+    byId('bossFields').hidden=type!=='boss';
+    const target=form.elements.namedItem('target');
+    target.closest('label').hidden=type==='boss'; target.required=type!=='boss';
+    if(type==='boss') target.value=1;
+    target.closest('label').querySelector('span').textContent=type==='survive'?'Sobreviver por (segundos)':'Quantidade';
+    target.max=type==='collect'?100:10000;
+    form.elements.namedItem('bossId').required=type==='boss';
+  }
+  if(editing?.type==='item') {
+    const points=form.elements.namedItem('itemType').value==='upgradePoints';
+    byId('amountFields').hidden=!points; form.elements.namedItem('amount').required=points;
+  }
+}
+
+// Operações de dados: só aplicadas depois de todas as referências serem validadas.
+function applyEditorValues(source, context, values) {
+  const next=copyContent(source), {type,id,parent}=context;
+  const item=copyContent(context.item);
+  const str=name=>String(values.get(name)??'').trim();
+  const num=name=>Number(values.get(name));
+  const yes=name=>values.get(name)==='on';
+  const setArt=target=>{target.portrait=str('portrait');target.battleFrames=[str('frame1'),str('frame2')].filter(Boolean);delete target.sprite;};
+  let list;
+  if(type!=='economy') item.name=str('name');
+  if(type==='character') {
+    list=next.characters; item.rarity=str('rarity');item.unlockedAtStart=yes('unlockedAtStart');
+    item.stats={...item.stats,hp:num('hp'),damage:num('damage'),speed:num('speed'),range:num('range'),cooldown:num('cooldown'),projectileSpeed:num('projectileSpeed'),dodge:num('dodge')/100};
+    item.role=str('role');item.description=str('description');item.storyGoal=str('storyGoal');setArt(item);
+  }
+  if(type==='skin') {
+    const owner=next.characters.find(c=>c.id===(id?parent:str('owner')));
+    if(!owner) throw new Error('Escolha o personagem desta skin.');
+    owner.skins||=[];list=owner.skins;
+    item.price=num('price');item.ownedAtStart=yes('ownedAtStart');item.inShop=yes('inShop');item.description=str('description');setArt(item);
+  }
+  if(type==='npc'||type==='boss') {
+    list=next.npcs;item.kind=type==='boss'?'boss':str('kind');item.boss=type==='boss';item.elite=type==='boss'||item.kind==='elite'||yes('elite');
+    for(const key of ['hp','damage','speed','radius','range','cooldown','projectileSpeed']) item[key]=num(key);
+    item.sprite=str('sprite');item.color=str('color');item.accent=str('accent');
+  }
+  if(type==='phase') {
+    list=next.story.phases;
+    const type=str('objectiveType');item.objective={type,target:type==='boss'?1:num('target')};
+    item.timeLimit=num('timeLimit');item.spawnInterval=num('spawnInterval');
+    const oldPool=item.enemies||item.npcPool||[];
+    item.enemies=values.getAll('enemies').map(id=>oldPool.find(n=>(typeof n==='string'?n:n.id)===id)||id);
+    delete item.npcPool;delete item.number;
+    if(type==='boss'){item.bossId=str('bossId');item.bossSpawnAt=num('bossSpawnAt');}
+    else {delete item.bossId;delete item.bossSpawnAt;}
+    item.reward={...item.reward,licano:num('licano'),upgradePoints:num('upgradePoints')};
+    const skin=str('rewardSkin');if(skin){const [characterId,skinId]=skin.split(':');item.reward.skin={characterId,skinId};}else delete item.reward.skin;
+    item.lore={speaker:str('speaker'),lines:str('lore').split(/\n\s*\n/).map(line=>line.trim()).filter(Boolean)};
+    item.subtitle=str('subtitle');item.description=str('description');item.background=str('background');
+    item.palette=Object.fromEntries(['ground','path','crystal','mist'].map(key=>[key,str(key)]));
+  }
+  if(type==='item') {
+    next.shop||={items:[]};next.shop.items||=[];list=next.shop.items;
+    item.type=str('itemType');item.price=num('price');item.description=str('description');item.icon=str('icon')||'✦';
+    if(item.type==='upgradePoints')item.amount=num('amount');else delete item.amount;
+  }
+  if(type==='modifier') {
+    next.lab||={items:[]};next.lab.items||=[];list=next.lab.items;
+    item.price=num('price');item.description=str('description');item.icon=str('icon')||'⬢';item.color=str('color');
+    item.effects={...item.effects,damageMultiplier:num('damageMultiplier'),speedMultiplier:num('speedMultiplier'),dodgeBonus:num('dodgeBonus')/100,caveVersion:yes('caveVersion')};
+  }
+  if(type==='rarity') {
+    next.rarities||=copyContent(CONTENT_DEFAULTS.rarities);
+    const key=id||uniqueContentId(item.name,Object.keys(next.rarities));
+    next.rarities[key]={...(next.rarities[key]||{}),label:item.name,color:str('color')};
+  }
+  if(type==='economy') {
+    next.meta={...next.meta,title:str('title'),subtitle:str('subtitle'),chapter:str('chapter'),version:str('version'),monthlyMessage:str('monthlyMessage')};
+    next.story.intro=str('intro'); next.economy||={};
+    next.economy.startingBalance={...next.economy.startingBalance,licano:num('startingLicano'),upgradePoints:num('startingUpgrade')};
+    next.economy.summon={...next.economy.summon,price:num('summonPrice')};
+    next.economy.upgrade={...next.economy.upgrade,baseCost:num('baseCost'),costGrowth:num('costGrowth'),maxLevel:num('maxLevel'),hpPerLevel:num('hpPerLevel')/100,damagePerLevel:num('damagePerLevel')/100};
+  }
+  if(list) {
+    item.id=id||uniqueContentId(item.name,[...list.map(i=>i.id),...(type==='skin'?['base']:[])]);
+    if(id) list.splice(list.findIndex(i=>i.id===id),1,item);else list.push(item);
+  }
+  return next;
+}
+function removalPlan(source,type,id,parent) {
+  const next=copyContent(source), item=findRaw(type,id,parent,next);
+  if(!item) throw new Error('Esta ficha já foi removida.');
+  let message='Excluir '+item.name+'?';
+  const stripRewards=matches=>{for(const p of next.story.phases) if(p.reward?.skin&&matches(p.reward.skin)) delete p.reward.skin;};
+  if(type==='character') {
+    if(next.characters.length===1) throw new Error('Mantenha pelo menos um personagem.');
+    next.characters=next.characters.filter(c=>c.id!==id);
+    stripRewards(s=>s.characterId===id);
+    if(next.shop?.items)next.shop.items=next.shop.items.filter(s=>s.characterId!==id);
+    if(next.economy?.summon?.queue)next.economy.summon.queue=next.economy.summon.queue.filter(key=>key!==id);
+    if(!next.characters.some(c=>c.unlockedAtStart))next.characters[0].unlockedAtStart=true;
+    for(const p of next.story.phases) {
+      if(p.lore?.speaker===id)p.lore.speaker='';
+    }
+    message+=' Suas skins e os prêmios que apontam para elas também serão retirados.';
+  }
+  if(type==='skin') {
+    next.characters.find(c=>c.id===parent).skins=next.characters.find(c=>c.id===parent).skins.filter(s=>s.id!==id);
+    stripRewards(s=>s.characterId===parent&&s.skinId===id);
+    if(next.shop?.items)next.shop.items=next.shop.items.filter(s=>!(s.characterId===parent&&s.skinId===id));
+    message+=' Ela também sai da loja e das recompensas das fases.';
+  }
+  if(type==='npc'||type==='boss') {
+    const uses=normalizeGameData(next).story.phases.filter(p=>p.bossId===id&&p.objective.type==='boss'||p.npcPool.some(n=>n.id===id));
+    if(uses.length)throw new Error('Antes de excluir '+item.name+', retire ou troque esse inimigo nas fases: '+uses.map(p=>p.name).join(', ')+'.');
+    next.npcs=next.npcs.filter(n=>n.id!==id);
+  }
+  if(type==='phase') {
+    if(next.story.phases.length===1)throw new Error('Mantenha pelo menos uma fase.');
+    next.story.phases=next.story.phases.filter(p=>p.id!==id);
+    message+=' A ordem das outras fases será ajustada automaticamente.';
+  }
+  if(type==='item')next.shop.items=next.shop.items.filter(i=>i.id!==id);
+  if(type==='modifier')next.lab.items=next.lab.items.filter(i=>i.id!==id);
+  if(type==='rarity') {
+    const uses=normalizeGameData(next).characters.filter(c=>c.rarity===id);
+    if(uses.length)throw new Error('Troque primeiro a raridade destes personagens: '+uses.map(c=>c.name).join(', ')+'.');
+    next.rarities||=copyContent(CONTENT_DEFAULTS.rarities);delete next.rarities[id];
+  }
+  return {data:next,message};
+}
+function closeEditor() {byId('editDialog').close();editing=null;formDirty=false;}
+function download(name,content,type) {
+  const url=URL.createObjectURL(new Blob([content],{type}));
+  const link=document.createElement('a');link.href=url;link.download=name;document.body.append(link);link.click();link.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),30000);
+}
+function exportGame() {
+  const errors=validateGameData(data);
+  if(errors.length){showMessage(errors,true);return;}
+  download('game.json',JSON.stringify(editableGameData(data),null,2)+'\n','application/json');
+  dirty=false;showMessage('Atualização pronta para baixar. Substitua data/game.json no seu jogo pelo arquivo baixado.');
+}
+function exportSnapshot() {
+  const errors=validateGameData(data);if(errors.length){showMessage(errors,true);return;}
+  const html=document.documentElement.cloneNode(true);
+  html.querySelector('#default-game').textContent=JSON.stringify(data).replace(/</g,'\\u003c');
+  html.querySelector('#editDialog').removeAttribute('open');
+  html.querySelector('#notice').hidden=true;
+  html.querySelector('#searchInput').setAttribute('value','');
+  download('editor.html','<!doctype html>\n'+html.outerHTML,'text/html');
+  dirty=false;showMessage('Painel atualizado pronto para baixar. Essa cópia já abre com seus dados.');
+}
+function bindEditor() {
+  byId('tabs').addEventListener('click',event=>{const button=event.target.closest('[data-category]');if(!button)return;category=button.dataset.category;byId('searchInput').value='';render();});
+  byId('searchInput').addEventListener('input',render);
+  byId('addButton').addEventListener('click',()=>openEditor({characters:'character',skins:'skin',npcs:'npc',bosses:'boss',phases:'phase'}[category]));
+  byId('contentList').addEventListener('click',event=>{
+    const edit=event.target.closest('[data-edit]');if(edit){openEditor(edit.dataset.edit,edit.dataset.id||null,edit.dataset.parent||null);return;}
+    const add=event.target.closest('[data-new]');if(add){openEditor(add.dataset.new);return;}
+    const move=event.target.closest('[data-move]');
+    if(move){const list=data.story.phases,index=list.findIndex(p=>p.id===move.dataset.id),to=index+Number(move.dataset.move);if(to<0||to>=list.length)return;[list[index],list[to]]=[list[to],list[index]];dirty=true;render();showMessage('Ordem das fases atualizada. Baixe para levar ao jogo.');return;}
+    if(event.target.closest('#snapshotButton'))exportSnapshot();
+  });
+  byId('editForm').addEventListener('input',()=>{formDirty=true;});
+  byId('editForm').addEventListener('change',()=>{formDirty=true;updateConditionalFields();});
+  byId('editForm').addEventListener('invalid',event=>{for(let parent=event.target.parentElement;parent;parent=parent.parentElement)if(parent.tagName==='DETAILS')parent.open=true;},true);
+  byId('editForm').addEventListener('submit',event=>{
+    event.preventDefault();
+    try {
+      const next=applyEditorValues(data,editing,new FormData(event.target));
+      const errors=validateGameData(next);
+      if(errors.length){showMessage(errors,true,'formErrors');byId('editDialog').scrollTop=0;return;}
+      data=next;dirty=true;closeEditor();render();showMessage('Ficha salva no painel. Baixe a atualização quando terminar.');
+    } catch(error){showMessage(error.message,true,'formErrors');byId('editDialog').scrollTop=0;}
+  });
+  for(const id of ['closeEditor','cancelEditor'])byId(id).addEventListener('click',closeEditor);
+  byId('editDialog').addEventListener('cancel',event=>{event.preventDefault();closeEditor();});
+  byId('removeButton').addEventListener('click',()=>{
+    try {
+      const plan=removalPlan(data,editing.type,editing.id,editing.parent);
+      const errors=validateGameData(plan.data);if(errors.length)throw new Error(errors.join(' '));
+      if(!window.confirm(plan.message))return;
+      data=plan.data;dirty=true;closeEditor();render();showMessage('Ficha removida. Baixe a atualização quando terminar.');
+    }catch(error){showMessage(error.message,true,'formErrors');byId('editDialog').scrollTop=0;}
+  });
+  byId('exportButton').addEventListener('click',exportGame);
+  byId('importButton').addEventListener('click',()=>byId('importInput').click());
+  byId('importInput').addEventListener('change',async event=>{
+    const file=event.target.files[0];if(!file)return;
+    try {
+      if(file.size>5*1024*1024)throw new Error('Escolha um game.json de até 5 MB, com caminhos de imagens.');
+      const next=JSON.parse(await file.text());
+      const errors=validateGameData(next);if(errors.length){showMessage(errors,true);return;}
+      if(dirty&&!window.confirm('Abrir outro arquivo e substituir as alterações ainda não baixadas?'))return;
+      data=editableGameData(next);dirty=false;category='characters';byId('searchInput').value='';render();showMessage('Dados de '+file.name+' abertos. Pode editar.');
+    }catch(error){showMessage('Não foi possível abrir o arquivo. '+error.message,true);}
+    finally{event.target.value='';}
+  });
+  document.addEventListener('error',event=>{if(event.target.tagName==='IMG')event.target.hidden=true;},true);
+  window.addEventListener('beforeunload',event=>{if(dirty||formDirty){event.preventDefault();event.returnValue='';}});
+}
+bindEditor();
+render();
+
+</script>
+</body>
+</html>

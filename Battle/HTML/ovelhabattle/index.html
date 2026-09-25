@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#141126" />
+    <meta
+      name="description"
+      content="Protótipo jogável de Ovelha Battle: Missão 2 — Distopia das Cavernas."
+    />
+    <title>Ovelha Battle: Missão 2</title>
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="icon" href="assets/sprites/bytela.png" />
+    <link rel="stylesheet" href="css/style.css?v=0.4.0" />
+  </head>
+  <body>
+    <div class="ambient ambient-one"></div>
+    <div class="ambient ambient-two"></div>
+
+    <div id="loading" class="loading-screen" aria-live="polite">
+      <div class="loading-mark" aria-hidden="true">OB</div>
+      <div>
+        <strong>Mapeando a caverna…</strong>
+        <span id="loading-status">Carregando game.json</span>
+      </div>
+    </div>
+
+    <div id="app" class="app-shell is-hidden">
+      <header class="topbar">
+        <button class="brand" data-screen-target="home" aria-label="Voltar ao início">
+          <span class="brand-orbit" aria-hidden="true"></span>
+          <span>
+            <strong>OVELHA BATTLE</strong>
+            <small>MISSÃO 2</small>
+          </span>
+        </button>
+
+        <div class="topbar-status">
+          <div class="season-pill">
+            <span class="pulse-dot"></span>
+            <span>Distopia das Cavernas</span>
+          </div>
+          <div class="currency-pill currency-licano" title="Licanô: ganho vencendo batalhas">
+            <span class="currency-icon">◈</span>
+            <strong id="currency-licano">0</strong>
+            <small>Licanô</small>
+          </div>
+          <div class="currency-pill currency-upgrade" title="Pontos usados para subir de nível">
+            <span class="currency-icon">⬡</span>
+            <strong id="currency-upgrade">0</strong>
+            <small>Upgrade</small>
+          </div>
+        </div>
+      </header>
+
+      <aside class="sidebar" aria-label="Menu principal">
+        <nav class="main-nav">
+          <button class="nav-button is-active" data-screen-target="home">
+            <span class="nav-icon">⌂</span><span>Início</span>
+          </button>
+          <button class="nav-button" data-screen-target="story">
+            <span class="nav-icon">⌁</span><span>História</span>
+          </button>
+          <button class="nav-button" data-screen-target="roster">
+            <span class="nav-icon">♟</span><span>Personagens</span>
+          </button>
+          <button class="nav-button" data-screen-target="summon">
+            <span class="nav-icon">✦</span><span>Conjuração</span>
+          </button>
+          <button class="nav-button" data-screen-target="shop">
+            <span class="nav-icon">◇</span><span>Bytelã</span>
+          </button>
+          <button class="nav-button" data-screen-target="lab">
+            <span class="nav-icon">⌬</span><span>Laboratório</span>
+          </button>
+          <button class="nav-button" data-screen-target="guide">
+            <span class="nav-icon">?</span><span>Como jogar</span>
+          </button>
+        </nav>
+
+        <div class="sidebar-hero" id="sidebar-hero">
+          <div class="mini-avatar" id="sidebar-avatar"></div>
+          <div>
+            <small>Selecionado</small>
+            <strong id="sidebar-character-name">Gabriel</strong>
+            <span id="sidebar-character-level">Nível 1</span>
+          </div>
+        </div>
+      </aside>
+
+      <main class="main-content" id="main-content">
+        <section class="screen is-active" id="screen-home" data-screen="home">
+          <div class="home-hero panel-dark">
+            <div class="hero-copy">
+              <span class="eyebrow">UMA EXPEDIÇÃO PELA DISTOPIA</span>
+              <h1 id="home-title">Missão 2:<br /><em>Distopia das Cavernas</em></h1>
+              <p id="home-intro"></p>
+              <div class="hero-actions">
+                <button class="button button-primary" id="continue-story-button">
+                  <span>Continuar missão</span><b>→</b>
+                </button>
+                <button class="button button-secondary" data-screen-target="roster">
+                  Trocar personagem
+                </button>
+              </div>
+              <div class="monthly-note">
+                <span>↻</span>
+                <div><strong>História contínua</strong><small id="monthly-message"></small></div>
+              </div>
+            </div>
+            <div class="hero-visual" id="home-hero-visual" aria-label="Personagem selecionado">
+              <div class="cave-ring ring-one"></div>
+              <div class="cave-ring ring-two"></div>
+              <div class="hero-sprite-wrap" id="home-hero-sprite"></div>
+              <div class="hero-stat-card">
+                <span id="home-hero-rarity">CRIADOR</span>
+                <strong id="home-hero-name">Gabriel</strong>
+                <small id="home-hero-role">Controle • Nível 1</small>
+              </div>
+            </div>
+          </div>
+
+          <div class="dashboard-grid">
+            <article class="dashboard-card next-phase-card">
+              <div class="section-heading compact">
+                <div><span class="eyebrow">PRÓXIMA PARADA</span><h2>Expedição</h2></div>
+                <button class="text-button" data-screen-target="story">Ver todas →</button>
+              </div>
+              <div id="featured-phase"></div>
+            </article>
+
+            <article class="dashboard-card lab-status-card">
+              <div class="section-heading compact">
+                <div><span class="eyebrow">RISCO CONTROLADO</span><h2>Modificador</h2></div>
+                <button class="text-button" data-screen-target="lab">Abrir laboratório →</button>
+              </div>
+              <div id="home-modifier-status"></div>
+            </article>
+
+            <article class="dashboard-card goals-card">
+              <div class="section-heading compact">
+                <div><span class="eyebrow">MISSÃO DO PERSONAGEM</span><h2>Objetivo pessoal</h2></div>
+              </div>
+              <div id="home-character-goal"></div>
+            </article>
+          </div>
+        </section>
+
+        <section class="screen" id="screen-story" data-screen="story">
+          <div class="section-heading">
+            <div>
+              <span class="eyebrow">MODO HISTÓRIA • ATUALIZAÇÃO MENSAL</span>
+              <h1>Caminhos da Distopia</h1>
+              <p id="story-summary"></p>
+            </div>
+            <div class="progress-summary">
+              <strong id="story-progress-value">0/5</strong>
+              <span>fases concluídas</span>
+            </div>
+          </div>
+          <div class="story-layout">
+            <div class="phase-path" id="story-phase-grid"></div>
+            <aside class="story-aside panel-dark">
+              <span class="eyebrow">EQUIPE DA EXPEDIÇÃO</span>
+              <h2>Objetivos individuais</h2>
+              <p>Cada personagem lê a mesma fase de um jeito diferente.</p>
+              <div class="story-character-list" id="story-character-list"></div>
+            </aside>
+          </div>
+        </section>
+
+        <section class="screen" id="screen-roster" data-screen="roster">
+          <div class="section-heading">
+            <div>
+              <span class="eyebrow">ARQUIVO DE COMBATENTES</span>
+              <h1>Personagens</h1>
+              <p>Escolha seu personagem, suba de nível e encontre seu próximo visual.</p>
+            </div>
+            <div class="filter-row" id="rarity-filters"></div>
+          </div>
+          <div class="roster-layout">
+            <div class="roster-grid" id="roster-grid"></div>
+            <aside class="character-detail panel-dark" id="character-detail"></aside>
+          </div>
+        </section>
+
+        <section class="screen" id="screen-summon" data-screen="summon">
+          <div class="summon-stage panel-dark">
+            <div class="summon-copy">
+              <span class="eyebrow">CONTRATO SEM ALEATORIEDADE</span>
+              <h1>Conjuração do Gabriel</h1>
+              <p id="summon-description"></p>
+              <div class="summon-rule">
+                <span>✓</span>
+                <div><strong>Você vê quem virá.</strong><small>O preço é fixo. Nada de caixa surpresa.</small></div>
+              </div>
+              <div class="summon-price" id="summon-price"></div>
+              <button class="button button-primary button-wide" id="summon-button">Conjurar personagem</button>
+            </div>
+            <div class="summon-preview" id="summon-preview"></div>
+          </div>
+          <div class="summon-queue-wrap">
+            <div class="section-heading compact">
+              <div><span class="eyebrow">ORDEM PÚBLICA</span><h2>Próximas conjurações</h2></div>
+            </div>
+            <div class="summon-queue" id="summon-queue"></div>
+          </div>
+        </section>
+
+        <section class="screen" id="screen-shop" data-screen="shop">
+          <div class="shop-header panel-dark">
+            <div class="shopkeeper" id="shopkeeper-visual"></div>
+            <div>
+              <span class="eyebrow">COMÉRCIO OFICIALMENTE QUESTIONÁVEL</span>
+              <h1>Loja da Bytelã</h1>
+              <p id="shop-subtitle"></p>
+              <blockquote>“Não toque em nada iluminado… a menos que vá comprar.”</blockquote>
+            </div>
+          </div>
+          <div class="shop-grid" id="shop-grid"></div>
+        </section>
+
+        <section class="screen" id="screen-lab" data-screen="lab">
+          <div class="lab-header panel-dark">
+            <div>
+              <span class="eyebrow">ACESSO NÃO RECOMENDADO</span>
+              <h1>Laboratório do Gabriel.AI</h1>
+              <p id="lab-subtitle"></p>
+            </div>
+            <div class="lab-character" id="lab-character-visual"></div>
+          </div>
+          <div class="warning-banner"><span>!</span><strong>Itens banidos</strong><small>Equipe apenas um por batalha. O laboratório não aceita devolução.</small></div>
+          <div class="lab-grid" id="lab-grid"></div>
+        </section>
+
+        <section class="screen" id="screen-guide" data-screen="guide">
+          <div class="section-heading">
+            <div>
+              <span class="eyebrow">MANUAL DE SOBREVIVÊNCIA DIGITAL</span>
+              <h1>Como jogar</h1>
+              <p>O protótipo funciona com teclado, mouse e controles de toque.</p>
+            </div>
+          </div>
+          <div class="guide-grid">
+            <article class="guide-card"><span class="guide-number">01</span><h2>Movimente-se</h2><div class="key-cluster"><kbd>W</kbd><div><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd></div></div><p>Use W, A, S e D. No celular, use o direcional virtual.</p></article>
+            <article class="guide-card"><span class="guide-number">02</span><h2>Ataque</h2><div class="mouse-icon">●</div><p>Clique para atirar na direção do cursor. Segure ESPAÇO ou o botão ATACAR para disparar no inimigo mais próximo.</p></article>
+            <article class="guide-card"><span class="guide-number">03</span><h2>Cumpra a fase</h2><div class="objective-icon">◎</div><p>Derrote, colete, sobreviva ou enfrente o chefe. Cada fase usa uma regra diferente.</p></article>
+            <article class="guide-card"><span class="guide-number">04</span><h2>Evolua</h2><div class="objective-icon">⬡</div><p>Ganhe Licanô e pontos de upgrade. Personagens e modificadores ficam salvos neste dispositivo.</p></article>
+          </div>
+          <div class="data-note panel-dark">
+            <div><span class="eyebrow">SUA EXPEDIÇÃO</span><h2>Progresso neste dispositivo</h2><p>Vitórias, níveis e itens ficam salvos neste navegador. Reinicie apenas se quiser começar uma nova expedição.</p></div>
+            <button class="button button-danger" id="reset-progress-button">Reiniciar progresso local</button>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <section id="battle-view" class="battle-view is-hidden" aria-label="Batalha">
+      <canvas tabindex="0" aria-label="Arena de batalha. Use W A S D para andar e Espaço para atacar." id="game-canvas" width="1280" height="720"></canvas>
+      <div class="battle-vignette"></div>
+      <header class="battle-hud-top">
+        <button id="battle-exit-button" class="hud-button" aria-label="Sair da batalha">←</button>
+        <div class="battle-phase-title"><small id="battle-phase-kicker">FASE 1</small><strong id="battle-phase-name">Entrada sem retorno</strong></div>
+        <div class="battle-timer"><span>◷</span><strong id="battle-timer-value">01:15</strong></div>
+        <button id="battle-pause-button" class="hud-button" aria-label="Pausar">Ⅱ</button>
+      </header>
+      <div class="battle-objective">
+        <span id="battle-objective-label">Derrote 12 invasores</span>
+        <strong id="battle-objective-progress">0 / 12</strong>
+        <div class="objective-bar"><i id="battle-objective-bar"></i></div>
+      </div>
+      <div class="battle-player-card">
+        <div class="battle-avatar" id="battle-avatar"></div>
+        <div><strong id="battle-character-name">Gabriel</strong><small id="battle-modifier-name">Sem modificador</small><div class="hp-bar"><i id="battle-hp-bar"></i></div><span id="battle-hp-text">3900 / 3900</span></div>
+      </div>
+      <div class="battle-feed" id="battle-feed" aria-live="polite"></div>
+      <div class="touch-controls" id="touch-controls">
+        <div class="dpad">
+          <button aria-label="Andar para cima" data-touch-key="KeyW">▲</button>
+          <button aria-label="Andar para a esquerda" data-touch-key="KeyA">◀</button>
+          <button aria-label="Andar para baixo" data-touch-key="KeyS">▼</button>
+          <button aria-label="Andar para a direita" data-touch-key="KeyD">▶</button>
+        </div>
+        <button class="attack-touch" id="touch-attack-button"><span>✦</span>ATACAR</button>
+      </div>
+      <div class="pause-card is-hidden" id="pause-card">
+        <span class="eyebrow">TEMPO CONGELADO</span>
+        <h2>Batalha pausada</h2>
+        <button class="button button-primary" id="resume-button">Continuar</button>
+        <button class="button button-secondary" id="pause-exit-button">Sair da fase</button>
+      </div>
+    </section>
+
+    <dialog class="story-dialog" id="story-dialog" aria-labelledby="story-title">
+      <header class="story-scene-header">
+        <button class="text-button" data-story="back">← Voltar ao mapa</button>
+        <span data-story="phase" class="eyebrow"></span>
+        <button class="button button-secondary" data-story="voice" aria-pressed="true">Voz ligada</button>
+      </header>
+      <div class="story-scene-body">
+        <div class="story-speaker-art"><img data-story="portrait" alt="" hidden /><span class="story-art-mark" aria-hidden="true">⌁</span></div>
+        <div class="story-scene-copy">
+          <span class="eyebrow" data-story="speaker"></span>
+          <h2 id="story-title" data-story="title"></h2>
+          <p data-story="text" class="story-line"></p>
+          <div class="story-reading"><button class="text-button" data-story="listen">↻ Ouvir trecho</button><span data-story="count"></span></div>
+          <div class="story-line-progress"><i data-story="progress"></i></div>
+          <small data-story="status" role="status"></small>
+        </div>
+      </div>
+      <footer class="story-scene-footer">
+        <div class="story-mission"><small>SEU OBJETIVO</small><strong data-story="objective"></strong><span>O tempo começa ao entrar na batalha.</span></div>
+        <div class="story-scene-actions"><button class="button button-secondary" data-story="previous">Anterior</button><button class="button button-primary" data-story="next" autofocus>Avançar →</button></div>
+        <button class="text-button story-skip" data-story="skip">Pular história e jogar →</button>
+      </footer>
+    </dialog>
+
+    <dialog class="game-dialog" id="game-dialog">
+      <button class="dialog-close" id="dialog-close" aria-label="Fechar">×</button>
+      <div id="dialog-content"></div>
+    </dialog>
+
+    <div class="toast-stack" id="toast-stack" aria-live="polite"></div>
+
+    <script type="module" src="js/app.js?v=0.4.0"></script>
+  </body>
+</html>
