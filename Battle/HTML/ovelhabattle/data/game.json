@@ -1,687 +1,629 @@
 {
-  "meta": {
-    "title": "Ovelha Battle",
-    "subtitle": "Missão 2",
-    "chapter": "Distopia das Cavernas",
-    "version": "0.4.0",
-    "monthlyMessage": "Novas fases da história chegam todo mês.",
-    "saveVersion": 2
-  },
-  "rarities": {
-    "criador": {
-      "label": "Criador",
-      "color": "#ffd166",
-      "description": "Gabriel, Ivy, Drop e Chan. Criadores dobram as regras da realidade."
-    },
-    "secreto": {
-      "label": "Secreto",
-      "color": "#ff4fd8",
-      "description": "Seres estranhos, anomalias e existências que deveriam estar escondidas."
-    },
-    "lenda": {
-      "label": "Lenda",
-      "color": "#9b7bff",
-      "description": "Guardiões, entidades e seres míticos."
-    },
-    "cidadao": {
-      "label": "Cidadão",
-      "color": "#42d7ff",
-      "description": "Combatentes fortes e versáteis da zona intermediária."
-    },
-    "cabo": {
-      "label": "Cabo",
-      "color": "#78e38b",
-      "description": "Subordinados treinados, especialistas e patrulheiros."
-    },
-    "morador": {
-      "label": "Morador",
-      "color": "#b8c0d9",
-      "description": "A raridade mais comum, barata e direta."
-    }
-  },
-  "economy": {
-    "currencies": {
-      "licano": {
-        "label": "Licanô",
-        "icon": "◈",
-        "description": "Moeda conquistada vencendo batalhas."
-      },
-      "upgradePoints": {
-        "label": "Pontos de upgrade",
-        "icon": "⬡",
-        "description": "Usados para aumentar o nível dos personagens."
-      }
-    },
-    "startingBalance": {
-      "licano": 320,
-      "upgradePoints": 180
-    },
-    "upgrade": {
-      "baseCost": 70,
-      "costGrowth": 45,
-      "maxLevel": 10,
-      "hpPerLevel": 0.09,
-      "damagePerLevel": 0.075
-    },
-    "summon": {
-      "title": "Conjuração do Gabriel",
-      "description": "Pague um preço fixo em Licanô. O próximo personagem sempre aparece antes da compra.",
-      "price": 250,
-      "currency": "licano",
-      "previewNext": true,
-      "queue": [
-        "dona_ovelha",
-        "ivy",
-        "drop",
-        "chan",
-        "mascarado",
-        "gabriel_ai"
-      ]
-    }
-  },
-  "characters": [
-    {
-      "id": "gabriel",
-      "name": "Gabriel",
-      "rarity": "criador",
-      "role": "Controle",
-      "description": "O Criador atravessa eras e abre fendas de energia para reorganizar o campo.",
-      "unlockedAtStart": true,
-      "portrait": "assets/portraits/gabriel.png",
-      "battleFrames": [
-        "assets/sprites/characters/gabriel-walk-1.png",
-        "assets/sprites/characters/gabriel-walk-2.png"
-      ],
-      "token": {
-        "color": "#f7a52f",
-        "accent": "#8d4cff",
-        "initial": "G"
-      },
-      "stats": {
-        "hp": 3900,
-        "damage": 520,
-        "speed": 205,
-        "range": 330,
-        "cooldown": 0.58
-      },
-      "storyGoal": "Fechar 3 fendas de criação durante a expedição.",
-      "skins": [
-        {
-          "id": "farao",
-          "name": "Gabriel Faraó",
-          "portrait": "assets/portraits/gabriel-farao.png",
-          "battleFrames": [
-            "assets/sprites/characters/gabriel-farao-walk-1.png",
-            "assets/sprites/characters/gabriel-farao-walk-2.png"
-          ],
-          "price": 210,
-          "description": "Uma versão dourada do Criador, encontrada fora de sua própria era."
-        }
-      ]
-    },
-    {
-      "id": "bytela",
-      "name": "Bytelã",
-      "rarity": "cidadao",
-      "role": "Suporte",
-      "description": "Comerciante-hacker que converte dados perdidos em escudos e ofertas suspeitosamente úteis.",
-      "unlockedAtStart": true,
-      "portrait": "assets/portraits/bytela.png",
-      "battleFrames": [
-        "assets/sprites/characters/bytela-walk-1.png",
-        "assets/sprites/characters/bytela-walk-2.png"
-      ],
-      "token": {
-        "color": "#f5ead6",
-        "accent": "#18d8ff",
-        "initial": "B"
-      },
-      "stats": {
-        "hp": 4300,
-        "damage": 420,
-        "speed": 190,
-        "dodge": 0.07,
-        "cooldown": 0.52,
-        "projectileSpeed": 610
-      },
-      "storyGoal": "Recuperar 8 fragmentos de dados da antiga loja.",
-      "skins": [
-        {
-          "id": "super_hacker",
-          "name": "Bytelã Super-Hacker",
-          "portrait": "assets/portraits/bytela-super-hacker.png",
-          "battleFrames": [
-            "assets/sprites/characters/bytela-super-hacker-walk-1.png",
-            "assets/sprites/characters/bytela-super-hacker-walk-2.png"
-          ],
-          "price": 190,
-          "description": "Teclados duplos, visor e uma quantidade irresponsável de neon."
-        }
-      ]
-    },
-    {
-      "id": "ivy",
-      "name": "Ivy",
-      "rarity": "criador",
-      "role": "Precisão",
-      "description": "Criadora de vínculos vivos que marca inimigos e recupera rotas esquecidas.",
-      "unlockedAtStart": false,
-      "portrait": "assets/portraits/ivy.png",
-      "battleFrames": [
-        "assets/sprites/characters/ivy-walk-1.png",
-        "assets/sprites/characters/ivy-walk-2.png"
-      ],
-      "token": {
-        "color": "#e83e55",
-        "accent": "#ff9c73",
-        "initial": "I"
-      },
-      "stats": {
-        "hp": 3400,
-        "damage": 610,
-        "speed": 210,
-        "dodge": 0.08,
-        "range": 390,
-        "cooldown": 0.72,
-        "projectileSpeed": 720
-      },
-      "storyGoal": "Reativar 4 raízes de energia da caverna."
-    },
-    {
-      "id": "drop",
-      "name": "Drop",
-      "rarity": "criador",
-      "role": "Velocidade",
-      "description": "Usa ecos líquidos para deslizar por caminhos onde o mapa já desistiu.",
-      "unlockedAtStart": false,
-      "portrait": "assets/portraits/drop.png",
-      "battleFrames": [
-        "assets/sprites/characters/drop-walk-1.png",
-        "assets/sprites/characters/drop-walk-2.png"
-      ],
-      "token": {
-        "color": "#ffbf38",
-        "accent": "#ff712f",
-        "initial": "D"
-      },
-      "stats": {
-        "hp": 3250,
-        "damage": 460,
-        "speed": 242,
-        "dodge": 0.14,
-        "range": 290,
-        "cooldown": 0.45,
-        "projectileSpeed": 690
-      },
-      "storyGoal": "Coletar 6 ecos líquidos sem ser atingido três vezes seguidas."
-    },
-    {
-      "id": "chan",
-      "name": "Chan",
-      "rarity": "criador",
-      "role": "Ofensivo",
-      "description": "Canaliza impulso criador em rajadas curtas e agressivas.",
-      "unlockedAtStart": false,
-      "portrait": "assets/portraits/chan.png",
-      "battleFrames": [
-        "assets/sprites/characters/chan-walk-1.png",
-        "assets/sprites/characters/chan-walk-2.png"
-      ],
-      "token": {
-        "color": "#1aa8ac",
-        "accent": "#62f4c9",
-        "initial": "C"
-      },
-      "stats": {
-        "hp": 4100,
-        "damage": 570,
-        "speed": 214,
-        "dodge": 0.06,
-        "range": 310,
-        "cooldown": 0.55,
-        "projectileSpeed": 670
-      },
-      "storyGoal": "Derrubar 12 patrulheiros do regime da caverna."
-    },
-    {
-      "id": "gabriel_ai",
-      "name": "Gabriel.AI",
-      "rarity": "secreto",
-      "role": "Anomalia",
-      "description": "Clone sintético que calcula padrões proibidos e altera pequenas regras da batalha.",
-      "unlockedAtStart": false,
-      "portrait": "assets/portraits/gabriel-ai.png",
-      "battleFrames": [
-        "assets/sprites/characters/gabriel-ai-walk-1.png",
-        "assets/sprites/characters/gabriel-ai-walk-2.png"
-      ],
-      "token": {
-        "color": "#161528",
-        "accent": "#d83cff",
-        "initial": "AI"
-      },
-      "stats": {
-        "hp": 4400,
-        "damage": 560,
-        "speed": 198,
-        "dodge": 0.11,
-        "range": 350,
-        "projectileSpeed": 730
-      },
-      "storyGoal": "Analisar os 5 terminais que o próprio laboratório tentou esconder.",
-      "skins": [
-        {
-          "id": "sabio",
-          "name": "Gabriel.AI Sábio",
-          "portrait": "assets/portraits/gabriel-ai-sabio.png",
-          "battleFrames": [
-            "assets/sprites/characters/gabriel-ai-sabio-walk-1.png",
-            "assets/sprites/characters/gabriel-ai-sabio-walk-2.png"
-          ],
-          "price": 230,
-          "description": "O laboratório ensinou demais ao clone. Péssima gestão de risco."
-        }
-      ]
-    },
-    {
-      "id": "dona_ovelha",
-      "name": "Dona Ovelha",
-      "rarity": "lenda",
-      "role": "Guardião",
-      "description": "Uma presença mítica capaz de proteger moradores e resistir aos corredores mais hostis.",
-      "unlockedAtStart": false,
-      "portrait": "assets/portraits/dona-ovelha.png",
-      "battleFrames": [
-        "assets/sprites/characters/dona-ovelha-walk-1.png",
-        "assets/sprites/characters/dona-ovelha-walk-2.png"
-      ],
-      "token": {
-        "color": "#fff4d7",
-        "accent": "#e9b34d",
-        "initial": "DO"
-      },
-      "stats": {
-        "hp": 5600,
-        "damage": 390,
-        "speed": 172,
-        "dodge": 0.03,
-        "range": 270,
-        "cooldown": 0.5,
-        "projectileSpeed": 560
-      },
-      "storyGoal": "Escoltar 3 moradores perdidos até uma zona segura."
-    },
-    {
-      "id": "mascarado",
-      "name": "Mascarado",
-      "rarity": "cabo",
-      "role": "Emboscada",
-      "description": "Especialista em rotas escuras, ataques rápidos e alvos isolados.",
-      "unlockedAtStart": false,
-      "portrait": "assets/portraits/mascarado.png",
-      "battleFrames": [
-        "assets/sprites/characters/mascarado-walk-1.png",
-        "assets/sprites/characters/mascarado-walk-2.png"
-      ],
-      "token": {
-        "color": "#33263d",
-        "accent": "#ff793f",
-        "initial": "M"
-      },
-      "stats": {
-        "hp": 3600,
-        "damage": 640,
-        "speed": 226,
-        "dodge": 0.16,
-        "range": 250,
-        "cooldown": 0.68,
-        "projectileSpeed": 690
-      },
-      "storyGoal": "Eliminar 3 guardas de elite antes que reforços apareçam."
-    }
-  ],
-  "story": {
-    "intro": "O caminho para a Distopia foi reaberto. Oito personagens entram nas cavernas com missões diferentes, mas a mesma pergunta: quem está reescrevendo os corredores?",
-    "monthlyCycle": "Cada atualização mensal pode acrescentar novas fases ao array story.phases sem alterar o motor do jogo.",
-    "phases": [
-      {
-        "id": "fase_1",
-        "name": "Entrada Sem Retorno",
-        "subtitle": "A primeira rachadura",
-        "description": "Abra caminho entre os Rastejantes e descubra por que a entrada se fechou atrás do grupo.",
-        "objective": {
-          "type": "defeat",
-          "target": 12
-        },
-        "timeLimit": 75,
-        "spawnInterval": 1.35,
-        "reward": {
-          "licano": 80,
-          "upgradePoints": 40
-        },
-        "palette": {
-          "ground": "#17142b",
-          "path": "#29224c",
-          "crystal": "#7d5cff",
-          "mist": "#ea4ddb"
-        },
-        "enemies": [
-          {
-            "id": "rastejante",
-            "weight": 7
-          },
-          {
-            "id": "eco_lume",
-            "weight": 3
-          }
-        ]
-      },
-      {
-        "id": "fase_2",
-        "name": "Mercado Afundado",
-        "subtitle": "Arquivos da Bytelã",
-        "description": "Recolha fragmentos espalhados pelas ruínas enquanto patrulheiros convergem para o mercado.",
-        "objective": {
-          "type": "collect",
-          "target": 6
-        },
-        "timeLimit": 85,
-        "spawnInterval": 1.2,
-        "reward": {
-          "licano": 95,
-          "upgradePoints": 60,
-          "skin": {
-            "characterId": "bytela",
-            "skinId": "super_hacker"
-          }
-        },
-        "palette": {
-          "ground": "#10263a",
-          "path": "#19465d",
-          "crystal": "#11ddeb",
-          "mist": "#8a3ffc"
-        },
-        "enemies": [
-          {
-            "id": "rastejante",
-            "weight": 5
-          },
-          {
-            "id": "eco_lume",
-            "weight": 3
-          },
-          {
-            "id": "guarda_basalto",
-            "weight": 2
-          }
-        ]
-      },
-      {
-        "id": "fase_3",
-        "name": "Lago Repriton",
-        "subtitle": "Corra ou seja cercado",
-        "description": "O vapor do Repriton acelera tudo. Sobreviva até o caminho reaparecer.",
-        "objective": {
-          "type": "survive",
-          "target": 55
-        },
-        "timeLimit": 65,
-        "spawnInterval": 0.92,
-        "reward": {
-          "licano": 115,
-          "upgradePoints": 80
-        },
-        "palette": {
-          "ground": "#0f3038",
-          "path": "#145b63",
-          "crystal": "#5fffd0",
-          "mist": "#31cdbb"
-        },
-        "enemies": [
-          {
-            "id": "rastejante",
-            "weight": 3
-          },
-          {
-            "id": "eco_lume",
-            "weight": 2
-          },
-          {
-            "id": "vigia_repriton",
-            "weight": 5
-          }
-        ]
-      },
-      {
-        "id": "fase_4",
-        "name": "Mina Cavernizo",
-        "subtitle": "A força das versões proibidas",
-        "description": "Os experimentos Cavernizo transformaram guardas comuns em brutamontes de pedra viva.",
-        "objective": {
-          "type": "elite",
-          "target": 3
-        },
-        "timeLimit": 95,
-        "spawnInterval": 1.05,
-        "reward": {
-          "licano": 145,
-          "upgradePoints": 100,
-          "skin": {
-            "characterId": "gabriel",
-            "skinId": "farao"
-          }
-        },
-        "palette": {
-          "ground": "#2b1918",
-          "path": "#4b2b25",
-          "crystal": "#ff934d",
-          "mist": "#8c3cff"
-        },
-        "enemies": [
-          {
-            "id": "guarda_basalto",
-            "weight": 5
-          },
-          {
-            "id": "eco_lume",
-            "weight": 2
-          },
-          {
-            "id": "cavernizo",
-            "weight": 3
-          }
-        ]
-      },
-      {
-        "id": "fase_5",
-        "name": "Núcleo da Distopia",
-        "subtitle": "O corredor que pensa",
-        "description": "Alcance o centro e derrube o Regente de Basalto antes que a caverna feche a própria saída.",
-        "objective": {
-          "type": "boss",
-          "target": 1
-        },
-        "timeLimit": 120,
-        "spawnInterval": 1.1,
-        "bossSpawnAt": 10,
-        "reward": {
-          "licano": 220,
-          "upgradePoints": 160,
-          "skin": {
-            "characterId": "gabriel_ai",
-            "skinId": "sabio"
-          }
-        },
-        "palette": {
-          "ground": "#191023",
-          "path": "#351746",
-          "crystal": "#f14be9",
-          "mist": "#674bff"
-        },
-        "enemies": [
-          {
-            "id": "rastejante",
-            "weight": 2
-          },
-          {
-            "id": "vigia_repriton",
-            "weight": 3
-          },
-          {
-            "id": "guarda_basalto",
-            "weight": 3
-          },
-          {
-            "id": "eco_lume",
-            "weight": 2
-          }
-        ],
-        "bossId": "regente_basalto"
-      }
-    ]
-  },
-  "npcs": [
-    {
-      "id": "rastejante",
-      "name": "Rastejante",
-      "kind": "melee",
-      "sprite": "assets/sprites/enemies/rastejante.png",
-      "hp": 900,
-      "damage": 180,
-      "speed": 78
-    },
-    {
-      "id": "eco_lume",
-      "name": "Eco-Lume",
-      "kind": "ranged",
-      "sprite": "assets/sprites/enemies/eco-lume.png",
-      "color": "#56e5ff",
-      "accent": "#1489a5",
-      "hp": 700,
-      "damage": 140,
-      "speed": 58,
-      "radius": 17
-    },
-    {
-      "id": "guarda_basalto",
-      "name": "Guarda de Basalto",
-      "kind": "tank",
-      "sprite": "assets/sprites/enemies/guarda-basalto.png",
-      "color": "#a77968",
-      "accent": "#55312b",
-      "hp": 2100,
-      "damage": 260,
-      "speed": 46,
-      "radius": 27
-    },
-    {
-      "id": "vigia_repriton",
-      "name": "Vigia Repriton",
-      "kind": "dash",
-      "sprite": "assets/sprites/enemies/vigia-repriton.png",
-      "color": "#53ffc1",
-      "accent": "#158b69",
-      "hp": 1050,
-      "damage": 205,
-      "speed": 125,
-      "radius": 18
-    },
-    {
-      "id": "cavernizo",
-      "name": "Cavernizo",
-      "kind": "elite",
-      "sprite": "assets/sprites/enemies/cavernizo.png",
-      "color": "#ff9958",
-      "accent": "#8c3f2c",
-      "hp": 4600,
-      "damage": 350,
-      "speed": 54,
-      "radius": 34
-    },
-    {
-      "id": "regente_basalto",
-      "name": "Regente de Basalto",
-      "kind": "boss",
-      "sprite": "assets/sprites/enemies/regente-basalto.png",
-      "color": "#ff4fa9",
-      "accent": "#552363",
-      "hp": 13500,
-      "damage": 410,
-      "speed": 48,
-      "range": 300,
-      "cooldown": 1.25,
-      "projectileSpeed": 280
-    }
-  ],
-  "shop": {
-    "title": "Loja da Bytelã",
-    "subtitle": "Skins, cosméticos e inutilidades com surpreendente valor estratégico.",
-    "items": [
-      {
-        "id": "upgrade_100",
-        "type": "upgradePoints",
-        "name": "Pacote de upgrade",
-        "description": "+100 pontos de upgrade.",
-        "price": 90,
-        "amount": 100,
-        "icon": "⬡"
-      },
-      {
-        "id": "spray_caverna",
-        "type": "cosmetic",
-        "name": "Spray: Saída inexistente",
-        "description": "Um cosmético totalmente inútil. A Bytelã recomenda.",
-        "price": 35,
-        "icon": "↯"
-      },
-      {
-        "id": "rastro_pixel",
-        "type": "cosmetic",
-        "name": "Rastro de pixels",
-        "description": "Deixa partículas digitais durante o movimento.",
-        "price": 85,
-        "icon": "✦"
-      }
-    ]
-  },
-  "lab": {
-    "title": "Laboratório do Gabriel.AI",
-    "subtitle": "Modificadores e itens banidos. Só um modificador pode ser equipado por batalha.",
-    "items": [
-      {
-        "id": "cavernizo",
-        "name": "Cavernizo",
-        "description": "Aumenta o ataque em 35% e ativa a versão das cavernas do personagem.",
-        "price": 170,
-        "effects": {
-          "damageMultiplier": 1.35,
-          "speedMultiplier": 0.94,
-          "dodgeBonus": 0,
-          "caveVersion": true
-        },
-        "color": "#ff8b4d",
-        "icon": "⬢"
-      },
-      {
-        "id": "repriton",
-        "name": "Repriton",
-        "description": "Aumenta a velocidade em 22% e adiciona 15% de chance de desvio.",
-        "price": 150,
-        "effects": {
-          "damageMultiplier": 1,
-          "speedMultiplier": 1.22,
-          "dodgeBonus": 0.15,
-          "caveVersion": false
-        },
-        "color": "#4effbd",
-        "icon": "➤"
-      }
-    ]
-  },
-  "controls": {
-    "move": "W / A / S / D",
-    "attack": "Clique esquerdo ou ESPAÇO para mirar automaticamente",
-    "pause": "ESC",
-    "touch": "Direcional na tela + botão ATACAR"
-  }
+"meta": {
+"title": "Ovelha Battle",
+"subtitle": "Missão 2",
+"chapter": "Distopia das Cavernas",
+"version": "1.0.0",
+"monthlyMessage": "Novas fases da história chegam todo mês.",
+"saveVersion": 2
+},
+"rarities": {
+"criador": {
+"label": "Criador",
+"color": "#ffd166",
+"description": "Gabriel, Ivy, Drop e Chan. Criadores dobram as regras da realidade."
+},
+"secreto": {
+"label": "Secreto",
+"color": "#ff4fd8",
+"description": "Seres estranhos, anomalias e existências que deveriam estar escondidas."
+},
+"lenda": {
+"label": "Lenda",
+"color": "#9b7bff",
+"description": "Guardiões, entidades e seres míticos."
+},
+"cidadao": {
+"label": "Cidadão",
+"color": "#42d7ff",
+"description": "Combatentes fortes e versáteis da zona intermediária."
+},
+"cabo": {
+"label": "Cabo",
+"color": "#78e38b",
+"description": "Subordinados treinados, especialistas e patrulheiros."
+},
+"morador": {
+"label": "Morador",
+"color": "#b8c0d9",
+"description": "A raridade mais comum, barata e direta."
+}
+},
+"economy": {
+"currencies": {
+"licano": {
+"label": "Licanô",
+"icon": "◈"
+},
+"upgradePoints": {
+"label": "Pontos de upgrade",
+"icon": "⬡"
+}
+},
+"startingBalance": {
+"licano": 320,
+"upgradePoints": 180
+},
+"upgrade": {
+"baseCost": 70,
+"costGrowth": 45,
+"maxLevel": 10,
+"hpPerLevel": 0.09,
+"damagePerLevel": 0.075
+},
+"summon": {
+"title": "Conjuração do Gabriel",
+"description": "Pague um preço fixo em Licanô. O próximo personagem sempre aparece antes da compra.",
+"price": 250,
+"currency": "licano",
+"previewNext": true,
+"queue": [
+"dona_ovelha",
+"ivy",
+"drop",
+"chan",
+"mascarado",
+"gabriel_ai"
+]
+}
+},
+"characters": [
+{
+"id": "gabriel",
+"name": "Gabriel",
+"rarity": "criador",
+"role": "Controle",
+"description": "O Criador atravessa eras e abre fendas de energia para reorganizar o campo.",
+"unlockedAtStart": false,
+"token": {
+"color": "#f7a52f",
+"accent": "#8d4cff",
+"initial": "G"
+},
+"stats": {
+"hp": 5900,
+"damage": 625,
+"speed": 255,
+"range": 330,
+"cooldown": 0.58
+},
+"storyGoal": "Fechar 3 fendas de criação durante a expedição."
+},
+{
+"id": "bytela",
+"name": "Bytelã",
+"rarity": "cidadao",
+"role": "Suporte",
+"description": "Comerciante-hacker que converte dados perdidos em escudos e ofertas suspeitosamente úteis.",
+"unlockedAtStart": true,
+"token": {
+"color": "#f5ead6",
+"accent": "#18d8ff",
+"initial": "B"
+},
+"stats": {
+"hp": 4300,
+"damage": 420,
+"speed": 190,
+"dodge": 0.09,
+"cooldown": 0.41,
+"projectileSpeed": 615
+},
+"storyGoal": "Recuperar 8 fragmentos de dados da antiga loja."
+},
+{
+"id": "ivy",
+"name": "Ivy",
+"rarity": "criador",
+"role": "Precisão",
+"description": "Criadora de vínculos vivos que marca inimigos e recupera rotas esquecidas.",
+"unlockedAtStart": false,
+"token": {
+"color": "#e83e55",
+"accent": "#ff9c73",
+"initial": "I"
+},
+"stats": {
+"hp": 3400,
+"damage": 610,
+"speed": 210,
+"dodge": 0.08,
+"range": 390,
+"cooldown": 0.72,
+"projectileSpeed": 720
+},
+"storyGoal": "Reativar 4 raízes de energia da caverna."
+},
+{
+"id": "drop",
+"name": "Drop",
+"rarity": "criador",
+"role": "Velocidade",
+"description": "Usa ecos líquidos para deslizar por caminhos onde o mapa já desistiu.",
+"unlockedAtStart": false,
+"token": {
+"color": "#ffbf38",
+"accent": "#ff712f",
+"initial": "D"
+},
+"stats": {
+"hp": 3250,
+"damage": 460,
+"speed": 242,
+"dodge": 0.14,
+"range": 290,
+"cooldown": 0.45,
+"projectileSpeed": 690
+},
+"storyGoal": "Coletar 6 ecos líquidos sem ser atingido três vezes seguidas."
+},
+{
+"id": "chan",
+"name": "Chan",
+"rarity": "criador",
+"role": "Ofensivo",
+"description": "Canaliza impulso criador em rajadas curtas e agressivas.",
+"unlockedAtStart": false,
+"token": {
+"color": "#1aa8ac",
+"accent": "#62f4c9",
+"initial": "C"
+},
+"stats": {
+"hp": 4100,
+"damage": 570,
+"speed": 214,
+"dodge": 0.06,
+"range": 310,
+"cooldown": 0.55,
+"projectileSpeed": 670
+},
+"storyGoal": "Derrubar 12 patrulheiros do regime da caverna."
+},
+{
+"id": "gabriel_ai",
+"name": "Gabriel.AI",
+"rarity": "secreto",
+"role": "Anomalia",
+"description": "Clone sintético que calcula padrões proibidos e altera pequenas regras da batalha.",
+"unlockedAtStart": false,
+"token": {
+"color": "#161528",
+"accent": "#d83cff",
+"initial": "AI"
+},
+"stats": {
+"hp": 4400,
+"damage": 560,
+"speed": 198,
+"dodge": 0.11,
+"range": 350,
+"projectileSpeed": 730
+},
+"storyGoal": "Analisar os 5 terminais que o próprio laboratório tentou esconder."
+},
+{
+"id": "dona_ovelha",
+"name": "Dona Ovelha",
+"rarity": "lenda",
+"role": "Guardião",
+"description": "Uma presença mítica capaz de proteger moradores e resistir aos corredores mais hostis.",
+"unlockedAtStart": false,
+"token": {
+"color": "#fff4d7",
+"accent": "#e9b34d",
+"initial": "DO"
+},
+"stats": {
+"hp": 5600,
+"damage": 390,
+"speed": 172,
+"dodge": 0.03,
+"range": 270,
+"cooldown": 0.5,
+"projectileSpeed": 560
+},
+"storyGoal": "Escoltar 3 moradores perdidos até uma zona segura."
+},
+{
+"id": "mascarado",
+"name": "Mascarado",
+"rarity": "cabo",
+"role": "Emboscada",
+"description": "Especialista em rotas escuras, ataques rápidos e alvos isolados.",
+"unlockedAtStart": false,
+"token": {
+"color": "#33263d",
+"accent": "#ff793f",
+"initial": "M"
+},
+"stats": {
+"hp": 3600,
+"damage": 640,
+"speed": 226,
+"dodge": 0.16,
+"range": 250,
+"cooldown": 0.68,
+"projectileSpeed": 690
+},
+"storyGoal": "Eliminar 3 guardas de elite antes que reforços apareçam."
+},
+{
+"id": "aquanti",
+"name": "Aquaster",
+"rarity": "morador",
+"role": "Ofensivo",
+"description": "Pequeno personagem ele é um tubarão martelo... Mas perto dele não fale de obras...",
+"unlockedAtStart": false,
+"token": {
+"color": "#ffffff",
+"accent": "#8d4cff",
+"initial": "NP"
+},
+"stats": {
+"hp": 6500,
+"damage": 900,
+"speed": 150,
+"dodge": 0.1,
+"range": 150,
+"cooldown": 0.9,
+"projectileSpeed": 558
+},
+"storyGoal": "Destruir seguranças"
+},
+{
+"id": "mangos",
+"name": "Mangôs",
+"rarity": "secreto",
+"role": "Mago",
+"description": "Criado por Gabriel.AI...",
+"unlockedAtStart": false,
+"token": {
+"color": "#a855f7",
+"accent": "#ec4899",
+"initial": "MA"
+},
+"stats": {
+"hp": 1200,
+"damage": 1400,
+"speed": 400,
+"range": 1000,
+"cooldown": 1,
+"projectileSpeed": 890,
+"dodge": 0.01
+},
+"storyGoal": "Ajudar o Gabriel.AI"
+},
+{
+"id": "raxex",
+"name": "Raxéx",
+"rarity": "cidadao",
+"role": "Hacker",
+"description": "Só quer instaurar uma monarquia.",
+"unlockedAtStart": false,
+"token": {
+"color": "#3b82f6",
+"accent": "#10b981",
+"initial": "RX"
+},
+"stats": {
+"hp": 5000,
+"damage": 210,
+"speed": 210,
+"range": 900,
+"cooldown": 0.2,
+"projectileSpeed": 600,
+"dodge": 0.15
+},
+"storyGoal": "Instaurar uma monarquia"
+},
+{
+"id": "kritz",
+"name": "Kritz",
+"rarity": "lenda",
+"role": "Combatente",
+"description": "Combatente veloz das cavernas.",
+"unlockedAtStart": false,
+"token": {
+"color": "#ef4444",
+"accent": "#f59e0b",
+"initial": "KR"
+},
+"stats": {
+"hp": 2500,
+"damage": 400,
+"speed": 500,
+"range": 400,
+"cooldown": 0.8,
+"projectileSpeed": 450,
+"dodge": 0.2
+},
+"storyGoal": "Explorar as cavernas e concluir a expedição."
+}
+],
+"story": {
+"phases": [
+{
+"id": "fase_1",
+"name": "Entrada Sem Retorno",
+"subtitle": "A primeira rachadura",
+"objective": {
+"type": "defeat",
+"target": 12
+},
+"timeLimit": 75,
+"spawnInterval": 1.35,
+"reward": {
+"licano": 250,
+"upgradePoints": 70
+},
+"palette": {
+"ground": "#17142b",
+"path": "#29224c",
+"crystal": "#7d5cff"
+},
+"enemies": [
+{
+"id": "rastejante",
+"weight": 7
+},
+{
+"id": "eco_lume",
+"weight": 3
+}
+]
+},
+{
+"id": "fase_2",
+"name": "Mercado Afundado",
+"subtitle": "Arquivos da Bytelã",
+"objective": {
+"type": "collect",
+"target": 6,
+"label": "Colete 6 fragmentos"
+},
+"timeLimit": 85,
+"spawnInterval": 1.2,
+"reward": {
+"licano": 95,
+"upgradePoints": 60
+},
+"palette": {
+"ground": "#10263a",
+"path": "#19465d",
+"crystal": "#11ddeb"
+},
+"enemies": [
+{
+"id": "rastejante",
+"weight": 5
+},
+{
+"id": "eco_lume",
+"weight": 3
+},
+{
+"id": "guarda_basalto",
+"weight": 2
+}
+]
+},
+{
+"id": "fase_3",
+"name": "Lago Repriton",
+"subtitle": "Corra ou seja cercado",
+"objective": {
+"type": "survive",
+"target": 55,
+"label": "Sobreviva por 55s"
+},
+"timeLimit": 65,
+"spawnInterval": 0.92,
+"reward": {
+"licano": 115,
+"upgradePoints": 80
+},
+"palette": {
+"ground": "#0f3038",
+"path": "#145b63",
+"crystal": "#5fffd0"
+},
+"enemies": [
+{
+"id": "rastejante",
+"weight": 3
+},
+{
+"id": "eco_lume",
+"weight": 2
+},
+{
+"id": "vigia_repriton",
+"weight": 5
+}
+]
+},
+{
+"id": "fase_4",
+"name": "Mina Cavernizo",
+"subtitle": "A força das versões proibidas",
+"objective": {
+"type": "elite",
+"target": 3,
+"label": "Derrote 3 Cavernizos"
+},
+"timeLimit": 95,
+"spawnInterval": 1.05,
+"reward": {
+"licano": 145,
+"upgradePoints": 100
+},
+"palette": {
+"ground": "#2b1918",
+"path": "#4b2b25",
+"crystal": "#ff934d"
+},
+"enemies": [
+{
+"id": "guarda_basalto",
+"weight": 5
+},
+{
+"id": "eco_lume",
+"weight": 2
+},
+{
+"id": "cavernizo",
+"weight": 3
+}
+]
+},
+{
+"id": "fase_5",
+"name": "Núcleo da Distopia",
+"subtitle": "O corredor que pensa",
+"objective": {
+"type": "boss",
+"target": 1,
+"label": "Derrote o Regente"
+},
+"timeLimit": 120,
+"spawnInterval": 1.1,
+"bossSpawnAt": 5,
+"reward": {
+"licano": 220,
+"upgradePoints": 160
+},
+"palette": {
+"ground": "#191023",
+"path": "#351746",
+"crystal": "#f14be9"
+},
+"enemies": [
+{
+"id": "rastejante",
+"weight": 2
+},
+{
+"id": "vigia_repriton",
+"weight": 3
+}
+],
+"bossId": "regente_basalto"
+}
+]
+},
+"npcs": [
+{
+"id": "rastejante",
+"name": "Rastejante",
+"kind": "melee",
+"color": "#c47de8",
+"hp": 900,
+"damage": 180,
+"speed": 78,
+"radius": 16
+},
+{
+"id": "eco_lume",
+"name": "Eco-Lume",
+"kind": "ranged",
+"color": "#56e5ff",
+"hp": 700,
+"damage": 140,
+"speed": 58,
+"radius": 17
+},
+{
+"id": "guarda_basalto",
+"name": "Guarda de Basalto",
+"kind": "tank",
+"color": "#a77968",
+"hp": 2100,
+"damage": 260,
+"speed": 46,
+"radius": 27
+},
+{
+"id": "vigia_repriton",
+"name": "Vigia Repriton",
+"kind": "dash",
+"color": "#53ffc1",
+"hp": 1050,
+"damage": 205,
+"speed": 125,
+"radius": 18
+},
+{
+"id": "cavernizo",
+"name": "Cavernizo",
+"kind": "elite",
+"color": "#ff9958",
+"hp": 4600,
+"damage": 350,
+"speed": 54,
+"radius": 34
+},
+{
+"id": "regente_basalto",
+"name": "Regente de Basalto",
+"kind": "boss",
+"color": "#ff4fa9",
+"hp": 13500,
+"damage": 410,
+"speed": 48,
+"radius": 45
+}
+],
+"shop": {
+"items": [
+{
+"id": "upgrade_100",
+"type": "upgradePoints",
+"name": "Pacote de upgrade",
+"description": "+100 pontos de upgrade.",
+"price": 90,
+"amount": 100,
+"icon": "⬡"
+}
+]
+},
+"lab": {
+"items": [
+{
+"id": "cavernizo",
+"name": "Cavernizo Mod",
+"description": "+35% de dano, -6% velocidade.",
+"price": 170,
+"effects": {
+"damageMultiplier": 1.35,
+"speedMultiplier": 0.94
+},
+"color": "#ff8b4d",
+"icon": "⬢"
+},
+{
+"id": "repriton",
+"name": "Repriton Mod",
+"description": "+22% velocidade, +15% esquiva.",
+"price": 150,
+"effects": {
+"damageMultiplier": 1,
+"speedMultiplier": 1.22
+},
+"color": "#4effbd",
+"icon": "➤"
+}
+]
+}
 }
